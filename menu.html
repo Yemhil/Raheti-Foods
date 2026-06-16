@@ -233,4 +233,146 @@
     </footer>
 
 </body>
+    <style>
+        .add-to-cart-btn { background: #e63946; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: 15px; font-size: 0.9rem; }
+        .add-to-cart-btn:hover { background: #1d3557; }
+        #floating-cart { position: fixed; bottom: 30px; right: 30px; background: #1d3557; color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-weight: bold; font-size: 1.1rem; display: none; z-index: 1000; transition: transform 0.2s; }
+        #floating-cart:hover { transform: scale(1.05); }
+        #cart-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 25px; width: 90%; max-width: 450px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); z-index: 1001; }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
+        .cart-header h3 { margin: 0; color: #1d3557; }
+        .close-cart { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #666; }
+        #cart-items { max-height: 300px; overflow-y: auto; margin-bottom: 20px; }
+        .cart-item-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px dashed #ddd; padding-bottom: 8px; }
+        .remove-btn { color: #e63946; cursor: pointer; font-size: 1rem; margin-left: 15px; border: none; background: none; font-weight: bold; }
+        .checkout-btn { width: 100%; background: #25D366; color: white; border: none; padding: 15px; font-size: 1.2rem; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .checkout-btn:hover { background: #1ebe57; }
+        #cart-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; }
+    </style>
+
+    <div id="cart-overlay" onclick="toggleCart()"></div>
+    <div id="floating-cart" onclick="toggleCart()">🛒 Cart (<span id="cart-count">0</span>)</div>
+
+    <div id="cart-modal">
+        <div class="cart-header">
+            <h3>Your Order</h3>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div id="cart-items"></div>
+        <div style="text-align: right; font-weight: bold; font-size: 1.4rem; margin-bottom: 20px; color: #1d3557;">
+            Total: ₦<span id="cart-total">0</span>
+        </div>
+        
+        <button class="checkout-btn" onclick="processCheckout('2348127811947')">Pay & Send Order to WhatsApp</button>
+    </div>
+
+    <script>
+        let cart = [];
+
+        // Automatically inject "+ Add" buttons into the existing HTML menu
+        document.querySelectorAll('.menu-item').forEach(item => {
+            const name = item.querySelector('.item-name').innerText;
+            const priceText = item.querySelector('.item-price').innerText;
+            // Extract numerical value from price (removes the ₦ and commas)
+            const price = parseInt(priceText.replace(/[^0-9]/g, ''));
+
+            const btn = document.createElement('button');
+            btn.innerText = '+ Add';
+            btn.className = 'add-to-cart-btn';
+            btn.onclick = () => addToCart(name, price);
+            
+            // Group the price and button together
+            const priceContainer = document.createElement('div');
+            priceContainer.style.display = 'flex';
+            priceContainer.style.alignItems = 'center';
+            
+            const priceSpan = item.querySelector('.item-price');
+            item.insertBefore(priceContainer, priceSpan);
+            priceContainer.appendChild(priceSpan);
+            priceContainer.appendChild(btn);
+        });
+
+        // Cart State Management
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCartUI();
+            document.getElementById('floating-cart').style.display = 'block';
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+            if (cart.length === 0) {
+                document.getElementById('cart-modal').style.display = 'none';
+                document.getElementById('cart-overlay').style.display = 'none';
+                document.getElementById('floating-cart').style.display = 'none';
+            }
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const itemsContainer = document.getElementById('cart-items');
+            itemsContainer.innerHTML = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price;
+                itemsContainer.innerHTML += `
+                    <div class="cart-item-row">
+                        <span style="font-weight: 500;">${item.name}</span>
+                        <div>
+                            <span>₦${item.price.toLocaleString()}</span>
+                            <button class="remove-btn" onclick="removeFromCart(${index})">&times;</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('cart-total').innerText = total.toLocaleString();
+        }
+
+        function toggleCart() {
+            if(cart.length === 0) return;
+            const modal = document.getElementById('cart-modal');
+            const overlay = document.getElementById('cart-overlay');
+            if (modal.style.display === 'block') {
+                modal.style.display = 'none';
+                overlay.style.display = 'none';
+            } else {
+                modal.style.display = 'block';
+                overlay.style.display = 'block';
+            }
+        }
+
+        // WhatsApp Order Generation
+        function processCheckout(whatsappNumber) {
+            if(cart.length === 0) return;
+            
+            // Generate unique order code
+            const orderCode = "RAH-" + Math.floor(1000 + Math.random() * 9000);
+            
+            let message = `Hello Raheti Foods! I'd like to place an order.\n\n*Order Code:* ${orderCode}\n\n*Items:*\n`;
+            let total = 0;
+            
+            cart.forEach(item => {
+                message += `- ${item.name} (₦${item.price.toLocaleString()})\n`;
+                total += item.price;
+            });
+            
+            message += `\n*Total Due:* ₦${total.toLocaleString()}\n\nPlease confirm my order and provide payment instructions.`;
+
+            // Encode string for URL compatibility
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+        }
+    </script>
+    ```
+
+### Step 2: Save and Test
+
+1. Scroll down and click the green **Commit changes** button.
+2. Wait roughly 1 to 2 minutes for GitHub Actions to rebuild your website.
+3. Perform a Hard Refresh on your live `menu.html` page (`Ctrl` + `F5` on Windows, or `Cmd` + `Shift` + `R` on Mac).
+4. You will now see **"+ Add"** buttons next to every item. 
+5. Click one, and a floating cart will appear in the bottom right corner. Click the cart, review the items, and click the green checkout button to see how it perfectly formats the automated WhatsApp message with your `RAH-` order code.
 </html>
