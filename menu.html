@@ -263,13 +263,13 @@
             Total: ₦<span id="cart-total">0</span>
         </div>
         
-        <button class="checkout-btn" onclick="processCheckout('2348127811947')">Pay & Send Order to WhatsApp</button>
+        <button class="checkout-btn" onclick="processCheckout('2349011567290')">Pay & Send Order to WhatsApp</button>
     </div>
 
-    <script>
+        <script>
         let cart = [];
 
-       // Automatically inject "+ Add" buttons and portion dropdowns
+        // Automatically inject "+ Add" buttons, dropdowns, and quantity inputs
         document.querySelectorAll('.menu-item').forEach(item => {
             const nameSpan = item.querySelector('.item-name');
             const priceSpan = item.querySelector('.item-price');
@@ -278,7 +278,7 @@
 
             // Define rules for portion control
             const excludedPortions = ['Moi-moi', 'Salad', 'Fried Plantain'];
-            const mainMealsGrid = document.querySelectorAll('.menu-grid')[0]; // Targets the first grid (Rice & Main Meals)
+            const mainMealsGrid = document.querySelectorAll('.menu-grid')[0];
             const isMainMeal = mainMealsGrid.contains(item);
             const isExcluded = excludedPortions.includes(name);
 
@@ -288,11 +288,21 @@
             actionContainer.style.alignItems = 'center';
             actionContainer.style.gap = '8px';
 
+            // Create Quantity Input
+            const qtyInput = document.createElement('input');
+            qtyInput.type = 'number';
+            qtyInput.min = '1';
+            qtyInput.value = '1';
+            qtyInput.style.width = '45px';
+            qtyInput.style.padding = '5px';
+            qtyInput.style.border = '1px solid #ccc';
+            qtyInput.style.borderRadius = '4px';
+            qtyInput.style.fontFamily = 'inherit';
+            qtyInput.style.textAlign = 'center';
+
             if (isMainMeal && !isExcluded) {
-                // It is a portion-based meal! Hide the static text price.
                 priceSpan.style.display = 'none';
 
-                // Create a styling dropdown menu
                 const select = document.createElement('select');
                 select.style.padding = '5px 8px';
                 select.style.borderRadius = '4px';
@@ -302,12 +312,10 @@
                 select.style.fontWeight = 'bold';
                 select.style.color = '#333';
 
-                // Add the Full Portion option
                 const fullOpt = document.createElement('option');
                 fullOpt.value = basePrice;
                 fullOpt.text = `Full (2 spoons) - ₦${basePrice.toLocaleString()}`;
 
-                // Add the Half Portion option (auto-calculates 50% off)
                 const halfOpt = document.createElement('option');
                 halfOpt.value = basePrice / 2;
                 halfOpt.text = `Half (1 spoon) - ₦${(basePrice / 2).toLocaleString()}`;
@@ -315,40 +323,52 @@
                 select.appendChild(fullOpt);
                 select.appendChild(halfOpt);
 
-                // Add the cart button
                 const btn = document.createElement('button');
                 btn.innerText = '+ Add';
                 btn.className = 'add-to-cart-btn';
                 btn.style.marginLeft = '0';
                 
-                // Add specific portion text to the cart when clicked
                 btn.onclick = () => {
                     const selectedPrice = parseInt(select.value);
                     const portionText = select.options[select.selectedIndex].text.split(' - ')[0]; 
-                    addToCart(`${name} (${portionText})`, selectedPrice);
+                    const qty = parseInt(qtyInput.value) || 1;
+                    addToCart(`${name} (${portionText})`, selectedPrice, qty);
+                    qtyInput.value = '1'; // Reset box back to 1 after adding
                 };
 
                 actionContainer.appendChild(select);
+                actionContainer.appendChild(qtyInput);
                 actionContainer.appendChild(btn);
 
             } else {
-                // Standard items (Drinks, Snacks, Soups, Excluded items)
                 const btn = document.createElement('button');
                 btn.innerText = '+ Add';
                 btn.className = 'add-to-cart-btn';
                 btn.style.marginLeft = '0';
                 
-                btn.onclick = () => addToCart(name, basePrice);
+                btn.onclick = () => {
+                    const qty = parseInt(qtyInput.value) || 1;
+                    addToCart(name, basePrice, qty);
+                    qtyInput.value = '1'; // Reset box back to 1 after adding
+                };
 
-                actionContainer.appendChild(priceSpan); // Keeps the standard price text
+                actionContainer.appendChild(priceSpan);
+                actionContainer.appendChild(qtyInput);
                 actionContainer.appendChild(btn);
             }
 
-            item.appendChild(actionContainer); // Mounts the action area neatly
+            item.appendChild(actionContainer);
         });
+
         // Cart State Management
-        function addToCart(name, price) {
-            cart.push({ name, price });
+        function addToCart(name, price, qty) {
+            // Check if item already exists in the cart to avoid clutter
+            const existingItem = cart.find(item => item.name === name && item.price === price);
+            if (existingItem) {
+                existingItem.qty += qty; // Add to existing amount
+            } else {
+                cart.push({ name, price, qty }); // Add as a new item
+            }
             updateCartUI();
             document.getElementById('floating-cart').style.display = 'block';
         }
@@ -364,18 +384,22 @@
         }
 
         function updateCartUI() {
-            document.getElementById('cart-count').innerText = cart.length;
+            // Calculate total items (sum of all quantities)
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cart-count').innerText = totalItems;
+            
             const itemsContainer = document.getElementById('cart-items');
             itemsContainer.innerHTML = '';
             let total = 0;
 
             cart.forEach((item, index) => {
-                total += item.price;
+                const itemTotal = item.price * item.qty;
+                total += itemTotal;
                 itemsContainer.innerHTML += `
                     <div class="cart-item-row">
-                        <span style="font-weight: 500;">${item.name}</span>
+                        <span style="font-weight: 500;">${item.qty}x ${item.name}</span>
                         <div>
-                            <span>₦${item.price.toLocaleString()}</span>
+                            <span>₦${itemTotal.toLocaleString()}</span>
                             <button class="remove-btn" onclick="removeFromCart(${index})">&times;</button>
                         </div>
                     </div>
@@ -402,24 +426,24 @@
         function processCheckout(whatsappNumber) {
             if(cart.length === 0) return;
             
-            // Generate unique order code
             const orderCode = "RAH-" + Math.floor(1000 + Math.random() * 9000);
             
             let message = `Hello Raheti Foods! I'd like to place an order.\n\n*Order Code:* ${orderCode}\n\n*Items:*\n`;
             let total = 0;
             
             cart.forEach(item => {
-                message += `- ${item.name} (₦${item.price.toLocaleString()})\n`;
-                total += item.price;
+                const itemTotal = item.price * item.qty;
+                message += `- ${item.qty}x ${item.name} (₦${itemTotal.toLocaleString()})\n`;
+                total += itemTotal;
             });
             
             message += `\n*Total Due:* ₦${total.toLocaleString()}\n\nPlease confirm my order and provide payment instructions.`;
 
-            // Encode string for URL compatibility
             const encodedMessage = encodeURIComponent(message);
             window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
         }
     </script>
+   
     ```
 
 ### Step 2: Save and Test
