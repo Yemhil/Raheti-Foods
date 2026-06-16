@@ -269,29 +269,83 @@
     <script>
         let cart = [];
 
-        // Automatically inject "+ Add" buttons into the existing HTML menu
+       // Automatically inject "+ Add" buttons and portion dropdowns
         document.querySelectorAll('.menu-item').forEach(item => {
-            const name = item.querySelector('.item-name').innerText;
-            const priceText = item.querySelector('.item-price').innerText;
-            // Extract numerical value from price (removes the ₦ and commas)
-            const price = parseInt(priceText.replace(/[^0-9]/g, ''));
-
-            const btn = document.createElement('button');
-            btn.innerText = '+ Add';
-            btn.className = 'add-to-cart-btn';
-            btn.onclick = () => addToCart(name, price);
-            
-            // Group the price and button together
-            const priceContainer = document.createElement('div');
-            priceContainer.style.display = 'flex';
-            priceContainer.style.alignItems = 'center';
-            
+            const nameSpan = item.querySelector('.item-name');
             const priceSpan = item.querySelector('.item-price');
-            item.insertBefore(priceContainer, priceSpan);
-            priceContainer.appendChild(priceSpan);
-            priceContainer.appendChild(btn);
-        });
+            const name = nameSpan.innerText;
+            const basePrice = parseInt(priceSpan.innerText.replace(/[^0-9]/g, ''));
 
+            // Define rules for portion control
+            const excludedPortions = ['Moi-moi', 'Salad', 'Fried Plantain'];
+            const mainMealsGrid = document.querySelectorAll('.menu-grid')[0]; // Targets the first grid (Rice & Main Meals)
+            const isMainMeal = mainMealsGrid.contains(item);
+            const isExcluded = excludedPortions.includes(name);
+
+            // Create a clean container for our buttons/dropdowns
+            const actionContainer = document.createElement('div');
+            actionContainer.style.display = 'flex';
+            actionContainer.style.alignItems = 'center';
+            actionContainer.style.gap = '8px';
+
+            if (isMainMeal && !isExcluded) {
+                // It is a portion-based meal! Hide the static text price.
+                priceSpan.style.display = 'none';
+
+                // Create a styling dropdown menu
+                const select = document.createElement('select');
+                select.style.padding = '5px 8px';
+                select.style.borderRadius = '4px';
+                select.style.border = '1px solid #ccc';
+                select.style.fontFamily = 'inherit';
+                select.style.fontSize = '0.9rem';
+                select.style.fontWeight = 'bold';
+                select.style.color = '#333';
+
+                // Add the Full Portion option
+                const fullOpt = document.createElement('option');
+                fullOpt.value = basePrice;
+                fullOpt.text = `Full (2 spoons) - ₦${basePrice.toLocaleString()}`;
+
+                // Add the Half Portion option (auto-calculates 50% off)
+                const halfOpt = document.createElement('option');
+                halfOpt.value = basePrice / 2;
+                halfOpt.text = `Half (1 spoon) - ₦${(basePrice / 2).toLocaleString()}`;
+
+                select.appendChild(fullOpt);
+                select.appendChild(halfOpt);
+
+                // Add the cart button
+                const btn = document.createElement('button');
+                btn.innerText = '+ Add';
+                btn.className = 'add-to-cart-btn';
+                btn.style.marginLeft = '0';
+                
+                // Add specific portion text to the cart when clicked
+                btn.onclick = () => {
+                    const selectedPrice = parseInt(select.value);
+                    const portionText = select.options[select.selectedIndex].text.split(' - ')[0]; 
+                    addToCart(`${name} (${portionText})`, selectedPrice);
+                };
+
+                actionContainer.appendChild(select);
+                actionContainer.appendChild(btn);
+
+            } else {
+                // Standard items (Drinks, Snacks, Soups, Excluded items)
+                const btn = document.createElement('button');
+                btn.innerText = '+ Add';
+                btn.className = 'add-to-cart-btn';
+                btn.style.marginLeft = '0';
+                
+                btn.onclick = () => addToCart(name, basePrice);
+
+                actionContainer.appendChild(priceSpan); // Keeps the standard price text
+                actionContainer.appendChild(btn);
+            }
+
+            item.appendChild(actionContainer); // Mounts the action area neatly
+        });
         // Cart State Management
         function addToCart(name, price) {
             cart.push({ name, price });
