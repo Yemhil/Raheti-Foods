@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raheti Foods | Delicious Meals & Snacks</title>
+    <title>Raheti Foods | A Taste of Pride</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -11,18 +11,53 @@
             padding: 0;
             color: #333;
             background-color: #f9f9f9;
+            position: relative;
+        }
+        /* Faint Logo Background Watermark */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('LOG.png');
+            background-repeat: repeat;
+            background-size: 400px;
+            opacity: 0.04; /* Very faint so text is readable */
+            z-index: -1;
         }
         header {
-            background-color: #e63946;
+            background-color: #a01416; /* Deep red to match logo */
             color: white;
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            border-bottom: 4px solid #ffcc00; /* Yellow accent */
         }
-        header h1 {
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo {
+            height: 65px;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .brand-text h1 {
             margin: 0;
             font-size: 1.8rem;
+            line-height: 1.1;
+        }
+        .motto {
+            font-style: italic;
+            font-size: 0.95rem;
+            color: #ffcc00;
+            font-weight: bold;
         }
         nav a {
             color: white;
@@ -30,26 +65,30 @@
             margin-left: 1.5rem;
             font-weight: bold;
         }
+        nav a:hover { color: #ffcc00; }
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80') center/cover;
+            background: linear-gradient(rgba(160, 20, 22, 0.85), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80') center/cover;
             color: white;
             text-align: center;
             padding: 6rem 1rem;
         }
         .hero h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
         }
+        .hero p { font-size: 1.2rem; }
         .btn {
-            background-color: #ffb703;
-            color: #121212;
+            background-color: #ffcc00;
+            color: #a01416;
             padding: 0.8rem 2rem;
             text-decoration: none;
             font-weight: bold;
             border-radius: 5px;
             display: inline-block;
             margin-top: 1rem;
+            font-size: 1.1rem;
         }
+        .btn:hover { background-color: white; }
         .menu-section {
             padding: 3rem 2rem;
             text-align: center;
@@ -67,6 +106,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             width: 250px;
+            border-bottom: 3px solid #a01416;
         }
         footer {
             background-color: #1d3557;
@@ -80,7 +120,13 @@
 <body>
 
     <header>
-        <h1>Raheti Foods</h1>
+        <div class="brand">
+            <img src="LOG.png" alt="Raheti Foods Logo" class="logo">
+            <div class="brand-text">
+                <h1>Raheti Foods</h1>
+                <span class="motto">A Taste of Pride</span>
+            </div>
+        </div>
         <nav>
             <a href="menu.html">Our Menu</a>
             <a href="#contact">Contact Us</a>
@@ -88,9 +134,9 @@
     </header>
 
     <section class="hero">
-        <h2>Fresh, Fast, and Delicious</h2>
+        <h2>A Taste of Pride</h2>
         <p>Your favorite meals and snacks, prepared with quality ingredients.</p>
-        <a href="menu.html" class="btn">View Menu</a>
+        <a href="menu.html" class="btn">Order Now</a>
     </section>
 
     <section id="menu" class="menu-section">
