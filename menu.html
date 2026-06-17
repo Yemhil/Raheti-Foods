@@ -11,16 +11,44 @@
             padding: 0;
             color: #333;
             background-color: #fcfcfc;
+            position: relative;
+        }
+        /* Faint Logo Background Watermark */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('LOG.png');
+            background-repeat: repeat;
+            background-size: 400px;
+            opacity: 0.04;
+            z-index: -1;
         }
         header {
-            background-color: #e63946;
+            background-color: #a01416;
             color: white;
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 4px solid #ffcc00;
         }
-        header h1 { margin: 0; font-size: 1.6rem; }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo {
+            height: 60px;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .brand-text h1 { margin: 0; font-size: 1.6rem; line-height: 1.1; }
+        .motto { font-style: italic; font-size: 0.85rem; color: #ffcc00; font-weight: bold; }
         .back-btn {
             color: white;
             text-decoration: none;
@@ -29,14 +57,17 @@
             padding: 0.5rem 1rem;
             border-radius: 4px;
         }
+        .back-btn:hover { background-color: #ffcc00; color: #a01416; }
         .container {
             max-width: 1200px;
             margin: 2rem auto;
             padding: 0 1rem;
+            position: relative;
+            z-index: 1;
         }
         .menu-title {
             text-align: center;
-            color: #1d3557;
+            color: #a01416;
             font-size: 2.5rem;
             margin-bottom: 2rem;
         }
@@ -48,6 +79,7 @@
             font-size: 1.4rem;
             margin-top: 2.5rem;
             margin-bottom: 1rem;
+            border-left: 5px solid #ffcc00;
         }
         .menu-grid {
             display: grid;
@@ -59,33 +91,36 @@
             padding: 1.2rem;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            border-left: 4px solid #e63946;
+            border-left: 4px solid #a01416;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
-        .item-name {
-            font-weight: 600;
-            color: #222;
-        }
-        .item-price {
-            font-weight: bold;
-            color: #e63946;
-            white-space: nowrap;
-        }
+        .item-name { font-weight: 600; color: #222; flex-grow: 1; }
+        .item-price { font-weight: bold; color: #a01416; white-space: nowrap; }
         footer {
             background-color: #1d3557;
             color: white;
             text-align: center;
             padding: 1.5rem;
             margin-top: 4rem;
+            position: relative;
+            z-index: 1;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Raheti Foods</h1>
+        <div class="brand">
+            <img src="LOG.png" alt="Raheti Foods Logo" class="logo">
+            <div class="brand-text">
+                <h1>Raheti Foods</h1>
+                <span class="motto">A Taste of Pride</span>
+            </div>
+        </div>
         <a href="index.html" class="back-btn">← Back to Home</a>
     </header>
 
