@@ -86,20 +86,34 @@
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 1.5rem;
         }
-        .menu-item {
+       .menu-item {
             background: white;
             padding: 1.2rem;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             border-left: 4px solid #a01416;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
+            flex-direction: column; /* Stacks the title and buttons vertically */
+            align-items: flex-start;
+            gap: 12px;
+            box-sizing: border-box;
+            overflow: hidden; /* Stops buttons from bleeding off the edge */
         }
-        .item-name { font-weight: 600; color: #222; flex-grow: 1; }
+        .item-name { 
+            font-weight: bold; 
+            color: #222; 
+            font-size: 1.15rem;
+            width: 100%;
+            border-bottom: 1px dashed #ddd; /* Adds a clean separator line */
+            padding-bottom: 8px;
+        }
         .item-price { font-weight: bold; color: #a01416; white-space: nowrap; }
+        
+        /* Forces the buttons to wrap cleanly if the screen gets too small */
+        .menu-item > div {
+            flex-wrap: wrap;
+            width: 100%;
+        }
         footer {
             background-color: #1d3557;
             color: white;
@@ -481,11 +495,4 @@
    
     ```
 
-### Step 2: Save and Test
-
-1. Scroll down and click the green **Commit changes** button.
-2. Wait roughly 1 to 2 minutes for GitHub Actions to rebuild your website.
-3. Perform a Hard Refresh on your live `menu.html` page (`Ctrl` + `F5` on Windows, or `Cmd` + `Shift` + `R` on Mac).
-4. You will now see **"+ Add"** buttons next to every item. 
-5. Click one, and a floating cart will appear in the bottom right corner. Click the cart, review the items, and click the green checkout button to see how it perfectly formats the automated WhatsApp message with your `RAH-` order code.
 </html>
