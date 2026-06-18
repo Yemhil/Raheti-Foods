@@ -302,12 +302,71 @@
     <div id="cart-overlay" onclick="toggleCart()"></div>
     <div id="floating-cart" onclick="toggleCart()">🛒 Cart (<span id="cart-count">0</span>)</div>
 
-    <div id="cart-modal">
+  <div id="cart-modal">
         <div class="cart-header">
             <h3>Your Order</h3>
             <button class="close-cart" onclick="toggleCart()">&times;</button>
         </div>
         <div id="cart-items"></div>
+        
+        <div style="margin-bottom: 15px; border-top: 2px dashed #ddd; padding-top: 15px;">
+            <label style="font-weight: bold; color: #1d3557; display: block; margin-bottom: 5px;">Packaging Requirements:</label>
+            <p style="font-size: 0.8rem; color: #e63946; margin-top: 0; margin-bottom: 10px; font-weight: 500;">
+                *Note: 1 Take Away pack fits a mixed rice meal. 1 Portioning Bowl fits one soup. Please add accordingly.
+            </p>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 0.95rem;">
+                <span>Take Away Pack (₦300)</span>
+                <div style="display: flex; align-items: center;">
+                    <button onclick="updatePackaging('takeaway', -1)" style="padding: 2px 10px; font-weight: bold; cursor: pointer;">-</button>
+                    <span id="qty-takeaway" style="margin: 0 15px; font-weight: bold;">0</span>
+                    <button onclick="updatePackaging('takeaway', 1)" style="padding: 2px 10px; font-weight: bold; cursor: pointer;">+</button>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem;">
+                <span>Portioning Bowl (₦100)</span>
+                <div style="display: flex; align-items: center;">
+                    <button onclick="updatePackaging('bowl', -1)" style="padding: 2px 10px; font-weight: bold; cursor: pointer;">-</button>
+                    <span id="qty-bowl" style="margin: 0 15px; font-weight: bold;">0</span>
+                    <button onclick="updatePackaging('bowl', 1)" style="padding: 2px 10px; font-weight: bold; cursor: pointer;">+</button>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 15px; border-top: 2px dashed #ddd; padding-top: 15px;">
+            <label for="delivery-location" style="font-weight: bold; color: #1d3557; display: block; margin-bottom: 8px;">Delivery Location:</label>
+            <select id="delivery-location" onchange="updateCartUI()" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-family: inherit; font-size: 0.95rem; background-color: #f9f9f9;">
+                <option value="0">Pickup at Outlet (₦0)</option>
+                <option value="1000">Odofa - ₦1,000</option>
+                <option value="1000">Exodus - ₦1,000</option>
+                <option value="1000">Starlite - ₦1,000</option>
+                <option value="1300">Ajibade - ₦1,300</option>
+                <option value="1300">Agbara Estate - ₦1,300</option>
+                <option value="1500">Petedo - ₦1,500</option>
+                <option value="1500">Checkpoint - ₦1,500</option>
+                <option value="1500">Black signboard - ₦1,500</option>
+                <option value="1600">Iperin - ₦1,600</option>
+                <option value="1600">Ago eto - ₦1,600</option>
+                <option value="1600">Ibiye - ₦1,600</option>
+                <option value="1600">G2i / C2i - ₦1,600</option>
+                <option value="1700">Opic Ijanikin - ₦1,700</option>
+                <option value="1700">Doyin - ₦1,700</option>
+                <option value="2000">Idanyin - ₦2,000</option>
+                <option value="2000">Isuni - ₦2,000</option>
+                <option value="2000">Edu - ₦2,000</option>
+                <option value="2000">Churchgate - ₦2,000</option>
+                <option value="2000">Magbon - ₦2,000</option>
+                <option value="2000">Okoafo - ₦2,000</option>
+                <option value="2000">MTN - ₦2,000</option>
+                <option value="2500">Lusada - ₦2,500</option>
+                <option value="3000">Inside Lusada - ₦3,000</option>
+                <option value="3000">Igbesa - ₦3,000</option>
+                <option value="3500">Agunmo - ₦3,500</option>
+                <option value="3500">Muwo - ₦3,500</option>
+            </select>
+        </div>
+
         <div style="text-align: right; font-weight: bold; font-size: 1.4rem; margin-bottom: 20px; color: #1d3557;">
             Total: ₦<span id="cart-total">0</span>
         </div>
@@ -315,8 +374,10 @@
         <button class="checkout-btn" onclick="processCheckout('2349011567290')">Pay & Send Order to WhatsApp</button>
     </div>
 
-        <script>
+    <script>
         let cart = [];
+        let takeawayQty = 0;
+        let bowlQty = 0;
 
         // Automatically inject "+ Add" buttons, dropdowns, and quantity inputs
         document.querySelectorAll('.menu-item').forEach(item => {
@@ -325,19 +386,16 @@
             const name = nameSpan.innerText;
             const basePrice = parseInt(priceSpan.innerText.replace(/[^0-9]/g, ''));
 
-            // Define rules for portion control
             const excludedPortions = ['Moi-moi', 'Salad', 'Fried Plantain'];
             const mainMealsGrid = document.querySelectorAll('.menu-grid')[0];
             const isMainMeal = mainMealsGrid.contains(item);
             const isExcluded = excludedPortions.includes(name);
 
-            // Create a clean container for our buttons/dropdowns
             const actionContainer = document.createElement('div');
             actionContainer.style.display = 'flex';
             actionContainer.style.alignItems = 'center';
             actionContainer.style.gap = '8px';
 
-            // Create Quantity Input
             const qtyInput = document.createElement('input');
             qtyInput.type = 'number';
             qtyInput.min = '1';
@@ -382,7 +440,7 @@
                     const portionText = select.options[select.selectedIndex].text.split(' - ')[0]; 
                     const qty = parseInt(qtyInput.value) || 1;
                     addToCart(`${name} (${portionText})`, selectedPrice, qty);
-                    qtyInput.value = '1'; // Reset box back to 1 after adding
+                    qtyInput.value = '1';
                 };
 
                 actionContainer.appendChild(select);
@@ -398,7 +456,7 @@
                 btn.onclick = () => {
                     const qty = parseInt(qtyInput.value) || 1;
                     addToCart(name, basePrice, qty);
-                    qtyInput.value = '1'; // Reset box back to 1 after adding
+                    qtyInput.value = '1';
                 };
 
                 actionContainer.appendChild(priceSpan);
@@ -409,14 +467,27 @@
             item.appendChild(actionContainer);
         });
 
+        // Packaging Management
+        function updatePackaging(type, change) {
+            if (type === 'takeaway') {
+                takeawayQty += change;
+                if (takeawayQty < 0) takeawayQty = 0;
+                document.getElementById('qty-takeaway').innerText = takeawayQty;
+            } else if (type === 'bowl') {
+                bowlQty += change;
+                if (bowlQty < 0) bowlQty = 0;
+                document.getElementById('qty-bowl').innerText = bowlQty;
+            }
+            updateCartUI();
+        }
+
         // Cart State Management
         function addToCart(name, price, qty) {
-            // Check if item already exists in the cart to avoid clutter
             const existingItem = cart.find(item => item.name === name && item.price === price);
             if (existingItem) {
-                existingItem.qty += qty; // Add to existing amount
+                existingItem.qty += qty;
             } else {
-                cart.push({ name, price, qty }); // Add as a new item
+                cart.push({ name, price, qty });
             }
             updateCartUI();
             document.getElementById('floating-cart').style.display = 'block';
@@ -429,21 +500,25 @@
                 document.getElementById('cart-modal').style.display = 'none';
                 document.getElementById('cart-overlay').style.display = 'none';
                 document.getElementById('floating-cart').style.display = 'none';
+                // Reset packaging when cart is emptied
+                takeawayQty = 0;
+                bowlQty = 0;
+                document.getElementById('qty-takeaway').innerText = '0';
+                document.getElementById('qty-bowl').innerText = '0';
             }
         }
 
         function updateCartUI() {
-            // Calculate total items (sum of all quantities)
             const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
             document.getElementById('cart-count').innerText = totalItems;
             
             const itemsContainer = document.getElementById('cart-items');
             itemsContainer.innerHTML = '';
-            let total = 0;
+            let subtotal = 0;
 
             cart.forEach((item, index) => {
                 const itemTotal = item.price * item.qty;
-                total += itemTotal;
+                subtotal += itemTotal;
                 itemsContainer.innerHTML += `
                     <div class="cart-item-row">
                         <span style="font-weight: 500;">${item.qty}x ${item.name}</span>
@@ -455,7 +530,14 @@
                 `;
             });
 
-            document.getElementById('cart-total').innerText = total.toLocaleString();
+            // Calculate Delivery & Packaging
+            const deliverySelect = document.getElementById('delivery-location');
+            const deliveryFee = parseInt(deliverySelect.value) || 0;
+            const packagingFee = (takeawayQty * 300) + (bowlQty * 100);
+            
+            const finalTotal = subtotal + deliveryFee + packagingFee;
+
+            document.getElementById('cart-total').innerText = finalTotal.toLocaleString();
         }
 
         function toggleCart() {
@@ -475,18 +557,36 @@
         function processCheckout(whatsappNumber) {
             if(cart.length === 0) return;
             
+            const deliverySelect = document.getElementById('delivery-location');
+            const deliveryFee = parseInt(deliverySelect.value) || 0;
+            let deliveryLocationName = deliverySelect.options[deliverySelect.selectedIndex].text;
+            
+            if (deliveryFee === 0) {
+                deliveryLocationName = "Pickup at Outlet (No Delivery)";
+            }
+
+            const packagingFee = (takeawayQty * 300) + (bowlQty * 100);
             const orderCode = "RAH-" + Math.floor(1000 + Math.random() * 9000);
             
             let message = `Hello Raheti Foods! I'd like to place an order.\n\n*Order Code:* ${orderCode}\n\n*Items:*\n`;
-            let total = 0;
+            let subtotal = 0;
             
             cart.forEach(item => {
                 const itemTotal = item.price * item.qty;
                 message += `- ${item.qty}x ${item.name} (₦${itemTotal.toLocaleString()})\n`;
-                total += itemTotal;
+                subtotal += itemTotal;
             });
             
-            message += `\n*Total Due:* ₦${total.toLocaleString()}\n\nPlease confirm my order and provide payment instructions.`;
+            if (takeawayQty > 0 || bowlQty > 0) {
+                message += `\n*Packaging:*\n`;
+                if (takeawayQty > 0) message += `- ${takeawayQty}x Take Away Pack (₦${(takeawayQty * 300).toLocaleString()})\n`;
+                if (bowlQty > 0) message += `- ${bowlQty}x Portioning Bowl (₦${(bowlQty * 100).toLocaleString()})\n`;
+            }
+
+            const finalTotal = subtotal + deliveryFee + packagingFee;
+            
+            message += `\n*Delivery Method:* ${deliveryLocationName}\n`;
+            message += `*Total Due:* ₦${finalTotal.toLocaleString()}\n\nPlease confirm my order and provide payment instructions.`;
 
             const encodedMessage = encodeURIComponent(message);
             window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
