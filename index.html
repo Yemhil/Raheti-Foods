@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raheti Foods | A Taste of Pride</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -21,18 +22,38 @@
             background-image: url('LOG.png');
             background-repeat: repeat;
             background-size: 400px;
-            opacity: 0.04; /* Very faint so text is readable */
+            opacity: 0.04;
             z-index: -1;
         }
+
+        /* 4. Scrolling Promotional Banner */
+        .promo-banner {
+            background-color: #ffcc00;
+            color: #a01416;
+            padding: 8px 0;
+            font-weight: bold;
+            font-size: 0.95rem;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .promo-content {
+            display: inline-block;
+            animation: scroll-text 25s linear infinite;
+        }
+        @keyframes scroll-text {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
         header {
-            background-color: #a01416; /* Deep red to match logo */
+            background-color: #a01416;
             color: white;
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            border-bottom: 4px solid #ffcc00; /* Yellow accent */
+            border-bottom: 4px solid #ffcc00;
         }
         .brand {
             display: flex;
@@ -44,38 +65,25 @@
             border-radius: 50%;
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
-        .brand-text {
-            display: flex;
-            flex-direction: column;
-        }
-        .brand-text h1 {
-            margin: 0;
-            font-size: 1.8rem;
-            line-height: 1.1;
-        }
-        .motto {
-            font-style: italic;
-            font-size: 0.95rem;
-            color: #ffcc00;
-            font-weight: bold;
-        }
+        .brand-text { display: flex; flex-direction: column; }
+        .brand-text h1 { margin: 0; font-size: 1.8rem; line-height: 1.1; }
+        .motto { font-style: italic; font-size: 0.95rem; color: #ffcc00; font-weight: bold; }
         nav a {
             color: white;
             text-decoration: none;
             margin-left: 1.5rem;
             font-weight: bold;
+            transition: color 0.3s;
         }
         nav a:hover { color: #ffcc00; }
+        
         .hero {
             background: linear-gradient(rgba(160, 20, 22, 0.85), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80') center/cover;
             color: white;
             text-align: center;
             padding: 6rem 1rem;
         }
-        .hero h2 {
-            font-size: 2.8rem;
-            margin-bottom: 0.5rem;
-        }
+        .hero h2 { font-size: 2.8rem; margin-bottom: 0.5rem; }
         .hero p { font-size: 1.2rem; }
         .btn {
             background-color: #ffcc00;
@@ -87,37 +95,98 @@
             display: inline-block;
             margin-top: 1rem;
             font-size: 1.1rem;
+            transition: background-color 0.3s;
         }
         .btn:hover { background-color: white; }
-        .menu-section {
-            padding: 3rem 2rem;
+        
+        .section-title {
             text-align: center;
+            color: #a01416;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
         }
-        .menu-grid {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
+        
+        /* 1. Social Media & Video Section */
+        .video-section {
+            padding: 4rem 2rem;
+            background-color: white;
         }
-        .menu-item {
+        .video-container {
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 4px solid #ffcc00;
+        }
+        .video-container video {
+            width: 100%;
+            display: block;
+        }
+
+        /* 2. Trust & Testimonials Section */
+        .testimonials {
+            padding: 4rem 2rem;
+            background-color: #fcfcfc;
+            border-top: 2px dashed #ddd;
+        }
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .review-card {
             background: white;
-            padding: 1.5rem;
+            padding: 2rem;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            width: 250px;
-            border-bottom: 3px solid #a01416;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-left: 4px solid #a01416;
         }
+        .stars { color: #ffcc00; margin-bottom: 10px; font-size: 1.2rem; }
+        .review-text { font-style: italic; color: #555; line-height: 1.6; }
+        .reviewer { font-weight: bold; color: #1d3557; margin-top: 15px; }
+
+        /* 5. Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            left: 30px; /* Placed on the left so it doesn't cover the cart on the right */
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 35px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); }
+
         footer {
             background-color: #1d3557;
             color: white;
             text-align: center;
-            padding: 1.5rem;
-            margin-top: 2rem;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
         }
     </style>
 </head>
 <body>
+
+    <div class="promo-banner">
+        <div class="promo-content">
+            🚀 Fast Delivery across Lagos! | 🔥 Fresh Meals Prepared Daily | 🎂 Order your customized Main Cakes today! | 🍲 Taste the Pride in every bite!
+        </div>
+    </div>
 
     <header>
         <div class="brand">
@@ -128,8 +197,9 @@
             </div>
         </div>
         <nav>
-            <a href="menu.html">Our Menu</a>
-            <a href="#contact">Contact Us</a>
+            <a href="menu.html">Our Full Menu</a>
+            <a href="#video">Fresh Daily</a>
+            <a href="#reviews">Reviews</a>
         </nav>
     </header>
 
@@ -139,27 +209,50 @@
         <a href="menu.html" class="btn">Order Now</a>
     </section>
 
-    <section id="menu" class="menu-section">
-        <h2>Popular Favorites</h2>
-        <div class="menu-grid">
-            <div class="menu-item">
-                <h3>Signature Jollof Rice</h3>
-                <p>Rich, smoky, and perfectly spiced.</p>
+    <section id="video" class="video-section">
+        <h2 class="section-title">Fresh From Our Kitchen</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 2rem;">Take a look at what we're serving up today.</p>
+        
+        <div class="video-container">
+            <video controls autoplay muted loop>
+                <source src="raheti vid.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </section>
+
+    <section id="reviews" class="testimonials">
+        <h2 class="section-title">What Our Customers Say</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 2rem;">Don't just take our word for it.</p>
+        
+        <div class="testimonial-grid">
+            <div class="review-card">
+                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p class="review-text">"The Signature Jollof Rice is absolutely unmatched. It has that authentic party flavor, and the delivery to Lusada was surprisingly fast!"</p>
+                <div class="reviewer">- Tunde A.</div>
             </div>
-            <div class="menu-item">
-                <h3>Fresh Pastries</h3>
-                <p>Baked daily for the perfect crunch.</p>
+            
+            <div class="review-card">
+                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p class="review-text">"My go-to spot for lunch. The Nando Macaroni is always fresh, and their meatpies are the best in the area."</p>
+                <div class="reviewer">- Sarah O.</div>
             </div>
-            <div class="menu-item">
-                <h3>Chilled Beverages</h3>
-                <p>Refreshing drinks to pair with your meal.</p>
+            
+            <div class="review-card">
+                <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p class="review-text">"The customer service is fantastic. Ordering through the website and WhatsApp was so easy, and the food arrived hot."</p>
+                <div class="reviewer">- Michael D.</div>
             </div>
         </div>
     </section>
 
-    <footer id="contact">
+    <a href="https://wa.me/2349011567290?text=Hi%20Raheti%20Foods!%20I%20have%20a%20question..." class="whatsapp-float" target="_blank" title="Chat with us">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <footer>
         <p>&copy; 2026 Raheti Foods. All rights reserved.</p>
-        <p>Lagos, Nigeria | Place an order today!</p>
+        <p>Lagos, Nigeria</p>
     </footer>
 
 </body>
