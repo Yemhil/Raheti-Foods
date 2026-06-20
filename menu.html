@@ -302,7 +302,7 @@
     <div id="cart-overlay" onclick="toggleCart()"></div>
     <div id="floating-cart" onclick="toggleCart()">🛒 Cart (<span id="cart-count">0</span>)</div>
 
-  <div id="cart-modal">
+ <div id="cart-modal">
         <div class="cart-header">
             <h3>Your Order</h3>
             <button class="close-cart" onclick="toggleCart()">&times;</button>
@@ -367,12 +367,19 @@
             </select>
         </div>
 
+        <div style="margin-bottom: 15px; border-top: 2px dashed #ddd; padding-top: 15px;">
+            <label style="font-weight: bold; color: #1d3557; display: block; margin-bottom: 8px;">Email Address (For Payment Receipt):</label>
+            <input type="email" id="customer-email" placeholder="e.g. customer@email.com" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; font-family: inherit;">
+        </div>
+
         <div style="text-align: right; font-weight: bold; font-size: 1.4rem; margin-bottom: 20px; color: #1d3557;">
             Total: ₦<span id="cart-total">0</span>
         </div>
         
-        <button class="checkout-btn" onclick="processCheckout('2349011567290')">Pay & Send Order to WhatsApp</button>
+        <button class="checkout-btn" onclick="processCheckout('2349011567290')">Pay Securely Now</button>
     </div>
+
+    <script src="https://js.paystack.co/v1/inline.js"></script>
 
     <script>
         let cart = [];
@@ -500,7 +507,6 @@
                 document.getElementById('cart-modal').style.display = 'none';
                 document.getElementById('cart-overlay').style.display = 'none';
                 document.getElementById('floating-cart').style.display = 'none';
-                // Reset packaging when cart is emptied
                 takeawayQty = 0;
                 bowlQty = 0;
                 document.getElementById('qty-takeaway').innerText = '0';
@@ -553,9 +559,15 @@
             }
         }
 
-        // WhatsApp Order Generation
+        // Paystack Checkout Integration
         function processCheckout(whatsappNumber) {
             if(cart.length === 0) return;
+
+            const emailInput = document.getElementById('customer-email').value;
+            if(!emailInput) {
+                alert("Please enter your email address to proceed with payment.");
+                return;
+            }
             
             const deliverySelect = document.getElementById('delivery-location');
             const deliveryFee = parseInt(deliverySelect.value) || 0;
@@ -567,32 +579,54 @@
 
             const packagingFee = (takeawayQty * 300) + (bowlQty * 100);
             const orderCode = "RAH-" + Math.floor(1000 + Math.random() * 9000);
-            
-            let message = `Hello Raheti Foods! I'd like to place an order.\n\n*Order Code:* ${orderCode}\n\n*Items:*\n`;
             let subtotal = 0;
+            
+            let whatsappMessage = `Hello Raheti Foods! I have just placed and PAID for an order.\n\n*Order Code:* ${orderCode}\n*Payment Status:* PAID ✅\n\n*Items:*\n`;
             
             cart.forEach(item => {
                 const itemTotal = item.price * item.qty;
-                message += `- ${item.qty}x ${item.name} (₦${itemTotal.toLocaleString()})\n`;
+                whatsappMessage += `- ${item.qty}x ${item.name} (₦${itemTotal.toLocaleString()})\n`;
                 subtotal += itemTotal;
             });
             
             if (takeawayQty > 0 || bowlQty > 0) {
-                message += `\n*Packaging:*\n`;
-                if (takeawayQty > 0) message += `- ${takeawayQty}x Take Away Pack (₦${(takeawayQty * 300).toLocaleString()})\n`;
-                if (bowlQty > 0) message += `- ${bowlQty}x Portioning Bowl (₦${(bowlQty * 100).toLocaleString()})\n`;
+                whatsappMessage += `\n*Packaging:*\n`;
+                if (takeawayQty > 0) whatsappMessage += `- ${takeawayQty}x Take Away Pack (₦${(takeawayQty * 300).toLocaleString()})\n`;
+                if (bowlQty > 0) whatsappMessage += `- ${bowlQty}x Portioning Bowl (₦${(bowlQty * 100).toLocaleString()})\n`;
             }
 
             const finalTotal = subtotal + deliveryFee + packagingFee;
             
-            message += `\n*Delivery Method:* ${deliveryLocationName}\n`;
-            message += `*Total Due:* ₦${finalTotal.toLocaleString()}\n\nPlease confirm my order and provide payment instructions.`;
+            whatsappMessage += `\n*Delivery Method:* ${deliveryLocationName}\n`;
+            whatsappMessage += `*Total Paid:* ₦${finalTotal.toLocaleString()}`;
 
-            const encodedMessage = encodeURIComponent(message);
-            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+            // Initialize Paystack Popup
+            let handler = PaystackPop.setup({
+                key: 'pk_test_656445a6d02d1135ecf651eaf35078a833d8b891', // Your Test Key
+                email: emailInput,
+                amount: finalTotal * 100, // Paystack calculates in kobo, so multiply by 100
+                currency: 'NGN',
+                ref: orderCode, // Unique reference code
+                callback: function(response){
+                    // This runs ONLY if payment is successful
+                    whatsappMessage += `\n*Paystack Ref:* ${response.reference}\n\nPlease process my order!`;
+                    const encodedMessage = encodeURIComponent(whatsappMessage);
+                    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+                    
+                    // Empty the cart
+                    cart = [];
+                    updateCartUI();
+                    toggleCart();
+                    alert("Payment successful! Redirecting to WhatsApp...");
+                },
+                onClose: function(){
+                    alert('Transaction window closed. Payment was not completed.');
+                }
+            });
+            
+            handler.openIframe();
         }
-    </script>
-   
+    </script>   
     ```
 
 </html>
