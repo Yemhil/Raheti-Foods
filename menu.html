@@ -608,22 +608,38 @@
                 currency: 'NGN',
                 ref: orderCode, // Unique reference code
                 callback: function(response){
-                    // 1. Send the data to your new Google Sheet invisibly
+                    // 1. Send the data to your Google Sheet invisibly
                     fetch('https://script.google.com/macros/s/AKfycbxAizJ6UqSoFYXcLeqQ7nBCWeT19xGYtkh77GHCV8TgFn7G4glgc1Cs-sjy4eA4mulHXw/exec', {
                         method: 'POST',
                         body: JSON.stringify(cart)
                     }).catch(err => console.log("Inventory update sent."));
 
                     // 2. Generate the WhatsApp Message
-                    whatsappMessage += `\n*Paystack Ref:* ${response.reference}\n\nPlease process my order!`;
+                    whatsappMessage += `\n*Paystack Ref:* ${response.reference}\n\nKitchen, please begin preparation!`;
                     const encodedMessage = encodeURIComponent(whatsappMessage);
                     window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
                     
-                    // 3. Empty the cart and close out
+                    // 3. WIPE CART CLEAN & CLOSE MODAL
                     cart = [];
+                    takeawayQty = 0;
+                    bowlQty = 0;
                     updateCartUI();
-                    toggleCart();
-                    alert("Payment successful! Redirecting to WhatsApp...");
+                    
+                    document.getElementById('qty-takeaway').innerText = '0';
+                    document.getElementById('qty-bowl').innerText = '0';
+                    
+                    if (document.getElementById('table-ref')) {
+                        document.getElementById('table-ref').value = ""; // Clears Isashi table number
+                    }
+                    if (document.getElementById('customer-email')) {
+                        document.getElementById('customer-email').value = ""; // Clears email input
+                    }
+                    
+                    document.getElementById('cart-modal').style.display = 'none';
+                    document.getElementById('cart-overlay').style.display = 'none';
+                    document.getElementById('floating-cart').style.display = 'none';
+                    
+                    alert("Payment successful! Your order has been sent.");
                 },
             });
             
