@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raheti Foods | A Taste of Pride</title>
+    <!-- PWA / Android Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#a01416">
+    
+    <!-- iOS Support -->
+    <link rel="apple-touch-icon" href="LOG.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Raheti Foods">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: #333; background-color: #f9f9f9; position: relative; }
@@ -172,5 +182,12 @@
             }
         }
     </script>
+    <script>
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+    });
+</script>
 </body>
 </html>
