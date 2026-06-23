@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Menu | Raheti Foods</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: #333; background-color: #fcfcfc; position: relative; }
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('LOG.png'); background-repeat: repeat; background-size: 400px; opacity: 0.04; z-index: -1; }
-        header { background-color: #a01416; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid #ffcc00; }
+        header { background-color: #a01416; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid #ffcc00; flex-wrap: wrap; gap: 10px;}
         .brand { display: flex; align-items: center; gap: 15px; }
         .logo { height: 60px; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
         .brand-text { display: flex; flex-direction: column; }
         .brand-text h1 { margin: 0; font-size: 1.6rem; line-height: 1.1; }
         .motto { font-style: italic; font-size: 0.85rem; color: #ffcc00; font-weight: bold; }
-        .back-btn { color: white; text-decoration: none; font-weight: bold; background-color: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 4px; }
+        .back-btn { color: white; text-decoration: none; font-weight: bold; background-color: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 4px; font-size: 0.9rem;}
         .back-btn:hover { background-color: #ffcc00; color: #a01416; }
         .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; position: relative; z-index: 1; }
-        .menu-title { text-align: center; color: #a01416; font-size: 2.5rem; margin-bottom: 2rem; }
+        .menu-title { text-align: center; color: #a01416; font-size: 2.2rem; margin-bottom: 2rem; }
         .category-title { background-color: #1d3557; color: white; padding: 0.8rem 1rem; border-radius: 6px; font-size: 1.4rem; margin-top: 2.5rem; margin-bottom: 1rem; border-left: 5px solid #ffcc00; }
         .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
         .menu-item { background: white; padding: 1.2rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 4px solid #a01416; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; box-sizing: border-box; overflow: hidden; }
@@ -25,26 +26,26 @@
         .menu-item > div { flex-wrap: wrap; width: 100%; }
         footer { background-color: #1d3557; color: white; text-align: center; padding: 1.5rem; margin-top: 4rem; position: relative; z-index: 1; }
         
-        /* CART & BUTTON STYLES */
         .add-to-cart-btn { background: #e63946; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: 15px; font-size: 0.9rem; }
         .add-to-cart-btn:hover { background: #1d3557; }
         #floating-cart { position: fixed; bottom: 30px; right: 30px; background: #1d3557; color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-weight: bold; font-size: 1.1rem; display: none; z-index: 1000; transition: transform 0.2s; }
         #floating-cart:hover { transform: scale(1.05); }
-        #cart-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 25px; width: 90%; max-width: 450px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); z-index: 1001; }
-        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
-        .cart-header h3 { margin: 0; color: #1d3557; }
+        
+        #cart-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; width: 90%; max-width: 450px; max-height: 85vh; overflow-y: auto; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); z-index: 1001; }
+        
+        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 10px; }
+        .cart-header h3 { margin: 0; color: #1d3557; font-size: 1.3rem;}
         .close-cart { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #666; }
-        #cart-items { max-height: 250px; overflow-y: auto; margin-bottom: 20px; }
-        .cart-item-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px dashed #ddd; padding-bottom: 8px; }
-        .remove-btn { color: #e63946; cursor: pointer; font-size: 1rem; margin-left: 15px; border: none; background: none; font-weight: bold; }
-        .checkout-btn { width: 100%; background: #25D366; color: white; border: none; padding: 15px; font-size: 1.2rem; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        #cart-items { max-height: 180px; overflow-y: auto; margin-bottom: 15px; border-bottom: 1px solid #eee;}
+        .cart-item-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 8px; font-size: 0.95rem;}
+        .remove-btn { color: #e63946; cursor: pointer; font-size: 1rem; margin-left: 10px; border: none; background: none; font-weight: bold; }
+        .checkout-btn { width: 100%; background: #25D366; color: white; border: none; padding: 15px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
         .checkout-btn:hover { background: #1ebe57; }
+        .checkout-btn:disabled { background: #ccc; cursor: not-allowed; }
         #cart-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; }
     </style>
 </head>
 <body>
-        </div>
-    </div>
 
     <header>
         <div class="brand">
@@ -206,13 +207,13 @@
         </div>
         <div id="cart-items"></div>
         
-        <div style="margin-bottom: 15px; border-top: 2px dashed #ddd; padding-top: 15px;">
+        <div style="margin-bottom: 12px; padding-top: 10px;">
             <label style="font-weight: bold; color: #1d3557; display: block; margin-bottom: 5px;">Packaging Requirements:</label>
-            <p style="font-size: 0.8rem; color: #e63946; margin-top: 0; margin-bottom: 10px; font-weight: 500;">
-                *Note: 1 Take Away pack fits a mixed rice meal. 1 Portioning Bowl fits one soup. Please add accordingly.
+            <p style="font-size: 0.75rem; color: #e63946; margin-top: 0; margin-bottom: 10px;">
+                *1 Take Away pack fits a mixed rice meal. 1 Bowl fits one soup.
             </p>
             
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 0.95rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.95rem;">
                 <span>Take Away Pack (₦300)</span>
                 <div style="display: flex; align-items: center;">
                     <button onclick="updatePackaging('takeaway', -1)" style="padding: 2px 10px; font-weight: bold; cursor: pointer;">-</button>
@@ -232,11 +233,12 @@
         </div>
 
         <div style="margin-bottom: 15px; border-top: 2px dashed #ddd; padding-top: 15px;">
-            <label style="font-weight: bold; color: #1d3557; display: block; margin-bottom: 8px;">Your Name & Delivery Address:</label>
-            <textarea id="customer-details" placeholder="e.g. John Doe, 12 Main Street, near the bank" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; font-family: inherit; resize: vertical; min-height: 60px; margin-bottom: 10px;"></textarea>
+            <!-- SPLIT NAME AND ADDRESS -->
+            <label style="font-weight: bold; color: #1d3557; display: block; margin-bottom: 5px;">Your Name:</label>
+            <input type="text" id="customer-name" placeholder="e.g. John Doe" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; font-family: inherit; margin-bottom: 10px;">
 
-            <label for="delivery-location" style="font-weight: bold; color: #1d3557; display: block; margin-bottom: 8px;">Delivery Area:</label>
-            <select id="delivery-location" onchange="updateCartUI()" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-family: inherit; font-size: 0.95rem; background-color: #f9f9f9; margin-bottom: 10px;">
+            <label for="delivery-location" style="font-weight: bold; color: #1d3557; display: block; margin-bottom: 5px;">Delivery Area:</label>
+            <select id="delivery-location" onchange="updateCartUI()" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc; font-family: inherit; background-color: #f9f9f9; margin-bottom: 10px;">
                 <option value="0">Pickup at Outlet (₦0)</option>
                 <option value="1000">Odofa - ₦1,000</option>
                 <option value="1000">Exodus - ₦1,000</option>
@@ -266,16 +268,21 @@
                 <option value="3500">Muwo - ₦3,500</option>
             </select>
 
-            <label style="font-weight: bold; color: #1d3557; display: block; margin-bottom: 8px;">Email (For Payment Receipt):</label>
-            <input type="email" id="customer-email" placeholder="e.g. customer@email.com" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; font-family: inherit;">
+            <!-- DYNAMIC ADDRESS BOX -->
+            <div id="address-container" style="display: none;">
+                <label style="font-weight: bold; color: #1d3557; display: block; margin-bottom: 5px;">Delivery Address:</label>
+                <textarea id="customer-address" placeholder="e.g. 12 Main Street, near the bank" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; font-family: inherit; resize: vertical; min-height: 50px; margin-bottom: 10px;"></textarea>
+            </div>
+
+            <label style="font-weight: bold; color: #1d3557; display: block; margin-bottom: 5px;">Email (For Payment Receipt):</label>
+            <input type="email" id="customer-email" placeholder="customer@email.com" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; font-family: inherit;">
         </div>
 
-        <div style="text-align: right; font-weight: bold; font-size: 1.4rem; margin-bottom: 20px; color: #1d3557;">
+        <div style="text-align: right; font-weight: bold; font-size: 1.3rem; margin-bottom: 15px; color: #1d3557;">
             Total: ₦<span id="cart-total">0</span>
         </div>
         
-        <!-- Modified Checkout Button calls function WITHOUT number, it pulls from memory -->
-        <button class="checkout-btn" onclick="processCheckout()">Pay Securely Now</button>
+        <button id="pay-btn" class="checkout-btn" onclick="processCheckout()">Pay Securely Now</button>
     </div>
 
     <footer>
@@ -285,28 +292,17 @@
 
     <script src="https://js.paystack.co/v1/inline.js"></script>
     <script>
-        // STATE VARIABLES
-        let activeBranchName = "";
-        let activeBranchCode = "";
-        let activeWhatsapp = "";
+        // PULL BRANCH DATA FROM BROWSER MEMORY
+        let activeBranchCode = localStorage.getItem('rahetiBranch') || "Main";
+        let activeWhatsapp = localStorage.getItem('rahetiWhatsApp') || "2349011567290";
+        let activeBranchName = (activeBranchCode === "Main") ? "Ajibade" : "Isashi";
+        
+        document.getElementById('branch-display-name').innerText = `A Taste of Pride - ${activeBranchName} Branch`;
+
         let cart = [];
         let takeawayQty = 0;
         let bowlQty = 0;
 
-        // BRANCH SELECTION LOGIC
-        function selectBranch(branchCode, whatsappNumber) {
-            activeBranchCode = branchCode;
-            activeWhatsapp = whatsappNumber;
-            activeBranchName = (branchCode === "Main") ? "Ajibade" : "Isashi";
-            
-            // Update UI to show selected branch
-            document.getElementById('branch-display-name').innerText = `A Taste of Pride - ${activeBranchName} Branch`;
-            
-            // Hide the overlay
-            document.getElementById('branch-welcome-overlay').style.display = 'none';
-        }
-
-        // AUTO-GENERATE ADD BUTTONS
         document.querySelectorAll('.menu-item').forEach(item => {
             const nameSpan = item.querySelector('.item-name');
             const priceSpan = item.querySelector('.item-price');
@@ -394,7 +390,6 @@
             item.appendChild(actionContainer);
         });
 
-        // PACKAGING LOGIC
         function updatePackaging(type, change) {
             if (type === 'takeaway') {
                 takeawayQty += change;
@@ -408,7 +403,6 @@
             updateCartUI();
         }
 
-        // CART LOGIC
         function addToCart(name, price, qty) {
             const existingItem = cart.find(item => item.name === name && item.price === price);
             if (existingItem) {
@@ -460,6 +454,14 @@
             const deliveryFee = parseInt(deliverySelect.value) || 0;
             const packagingFee = (takeawayQty * 300) + (bowlQty * 100);
             
+            // DYNAMIC ADDRESS TOGGLE
+            const addressContainer = document.getElementById('address-container');
+            if (deliveryFee === 0) {
+                addressContainer.style.display = 'none'; // Hide if pickup
+            } else {
+                addressContainer.style.display = 'block'; // Show if delivery
+            }
+            
             const finalTotal = subtotal + deliveryFee + packagingFee;
             document.getElementById('cart-total').innerText = finalTotal.toLocaleString();
         }
@@ -477,32 +479,37 @@
             }
         }
 
-        // PAYSTACK CHECKOUT INTEGRATION
+        // PAYSTACK CHECKOUT
         function processCheckout() {
             if(cart.length === 0) return;
 
-            // Security check: Must have picked a branch
-            if(!activeBranchCode) {
-                alert("Error: No branch selected. Please refresh the page and try again.");
+            const customerName = document.getElementById('customer-name').value;
+            const customerAddress = document.getElementById('customer-address').value;
+            const emailInput = document.getElementById('customer-email').value;
+            const deliverySelect = document.getElementById('delivery-location');
+            const deliveryFee = parseInt(deliverySelect.value) || 0;
+            let deliveryLocationName = deliverySelect.options[deliverySelect.selectedIndex].text;
+            
+            if(!customerName || customerName.trim() === "") {
+                alert("Please enter your Name.");
                 return;
             }
 
-            const customerDetails = document.getElementById('customer-details').value;
-            const emailInput = document.getElementById('customer-email').value;
-            
-            if(!customerDetails || customerDetails.trim() === "") {
-                alert("Please enter your Name and Delivery Address so the rider knows where to go.");
+            // ONLY demand address if they are paying for delivery!
+            if (deliveryFee > 0 && (!customerAddress || customerAddress.trim() === "")) {
+                alert("Please enter your Delivery Address so the rider knows where to go.");
                 return;
             }
+
             if(!emailInput) {
                 alert("Please enter your email address to proceed with payment.");
                 return;
             }
             
-            const deliverySelect = document.getElementById('delivery-location');
-            const deliveryFee = parseInt(deliverySelect.value) || 0;
-            let deliveryLocationName = deliverySelect.options[deliverySelect.selectedIndex].text;
-            
+            const payBtn = document.getElementById('pay-btn');
+            payBtn.innerText = "Connecting to Bank...";
+            payBtn.disabled = true;
+
             if (deliveryFee === 0) {
                 deliveryLocationName = "Pickup at Outlet (No Delivery)";
             }
@@ -511,7 +518,10 @@
             const orderCode = "RAH-" + Math.floor(1000 + Math.random() * 9000);
             let subtotal = 0;
             
-            let whatsappMessage = `*🔥 NEW ONLINE ORDER 🔥*\n\n*Order Code:* ${orderCode}\n*Branch:* ${activeBranchName}\n*Customer Details:* ${customerDetails}\n*Payment Status:* PAID ✅\n\n*Items:*\n`;
+            // Format Final Address logic for WhatsApp
+            let finalAddressText = (deliveryFee === 0) ? "Will Pickup At Outlet" : customerAddress;
+            
+            let whatsappMessage = `*🔥 NEW ONLINE ORDER 🔥*\n\n*Order Code:* ${orderCode}\n*Branch:* ${activeBranchName}\n*Name:* ${customerName}\n*Address:* ${finalAddressText}\n*Payment Status:* PAID ✅\n\n*Items:*\n`;
             
             cart.forEach(item => {
                 const itemTotal = item.price * item.qty;
@@ -537,41 +547,38 @@
                 currency: 'NGN',
                 ref: orderCode, 
                 callback: function(response){
-                    // Send to Google Sheets - Now passes activeBranchCode!
                     fetch('https://script.google.com/macros/s/AKfycbxAizJ6UqSoFYXcLeqQ7nBCWeT19xGYtkh77GHCV8TgFn7G4glgc1Cs-sjy4eA4mulHXw/exec', {
                         method: 'POST',
                         body: JSON.stringify({ branch: activeBranchCode, cart: cart })
                     }).catch(err => console.log("Inventory update sent."));
 
-                    // Launch WhatsApp using the correct branch's number
                     whatsappMessage += `\n*Paystack Ref:* ${response.reference}\n\nKitchen, please begin preparation!`;
                     const encodedMessage = encodeURIComponent(whatsappMessage);
                     window.open(`https://wa.me/${activeWhatsapp}?text=${encodedMessage}`, '_blank');
                     
-                    // Reset Cart
                     cart = []; takeawayQty = 0; bowlQty = 0; updateCartUI();
                     if (document.getElementById('qty-takeaway')) document.getElementById('qty-takeaway').innerText = '0';
                     if (document.getElementById('qty-bowl')) document.getElementById('qty-bowl').innerText = '0';
-                    if (document.getElementById('customer-details')) document.getElementById('customer-details').value = ""; 
+                    if (document.getElementById('customer-name')) document.getElementById('customer-name').value = ""; 
+                    if (document.getElementById('customer-address')) document.getElementById('customer-address').value = ""; 
                     if (document.getElementById('customer-email')) document.getElementById('customer-email').value = ""; 
                     
                     document.getElementById('cart-modal').style.display = 'none';
                     document.getElementById('cart-overlay').style.display = 'none';
                     document.getElementById('floating-cart').style.display = 'none';
                     
+                    payBtn.innerText = "Pay Securely Now";
+                    payBtn.disabled = false;
+
                     alert(`Payment successful! Sending your order to the ${activeBranchName} branch.`);
                 },
+                onClose: function(){ 
+                    alert('Transaction closed. Payment not completed.'); 
+                    payBtn.innerText = "Pay Securely Now";
+                    payBtn.disabled = false;
+                }
             });
             handler.openIframe();
-            // Read directly from browser memory. Default to Ajibade if missing.
-     let activeBranchCode = localStorage.getItem('rahetiBranch') || "Main";
-     let activeWhatsapp = localStorage.getItem('rahetiWhatsApp') || "2349011567290";
-     let activeBranchName = (activeBranchCode === "Main") ? "Ajibade" : "Isashi";
-     let cart = [];
-     let takeawayQty = 0;
-     let bowlQty = 0;
-     // Auto-update header so customer knows they are on the right menu
-     document.getElementById('branch-display-name').innerText = `A Taste of Pride - ${activeBranchName} Branch`;
         }
     </script>
 </body>
