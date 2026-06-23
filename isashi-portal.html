@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Here | Raheti Foods Isashi</title>
+    <title>À La Carte Order | Raheti Foods Isashi</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: #333; background-color: #fcfcfc; position: relative; }
-        /* Faint background logo */
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('LOG.png'); background-repeat: repeat; background-size: 400px; opacity: 0.04; z-index: -1; }
         
         header { background-color: #a01416; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid #ffcc00; }
@@ -16,12 +15,13 @@
         .motto { font-size: 0.85rem; color: #ffcc00; font-weight: bold; }
         
         .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; position: relative; z-index: 1; }
-        .menu-title { text-align: center; color: #a01416; font-size: 2rem; margin-bottom: 1rem; }
+        .menu-title { text-align: center; color: #a01416; font-size: 2rem; margin-bottom: 0.5rem; }
+        .live-tag { display: inline-block; background-color: #e63946; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; font-weight: bold; text-align: center; margin: 0 auto 2rem auto; }
         .category-title { background-color: #1d3557; color: white; padding: 0.8rem 1rem; border-radius: 6px; font-size: 1.4rem; margin-top: 2.5rem; margin-bottom: 1rem; border-left: 5px solid #ffcc00; }
         .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
         
         .menu-item { background: white; padding: 1.2rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 4px solid #a01416; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; box-sizing: border-box; overflow: hidden; }
-        .item-name { font-weight: bold; color: #222; font-size: 1.15rem; width: 100%; border-bottom: 1px dashed #ddd; padding-bottom: 8px; }
+        .item-name { font-weight: bold; color: #222; font-size: 1.05rem; width: 100%; border-bottom: 1px dashed #ddd; padding-bottom: 8px; }
         .item-price { font-weight: bold; color: #a01416; }
         .menu-item > div { flex-wrap: wrap; width: 100%; }
         
@@ -43,19 +43,23 @@
 
     <header>
         <div class="brand">
-            <img src="LOG.png" alt="Raheti Foods Logo" class="logo">
+            <img src="LOG.png" alt="Raheti Foods Logo" class="logo" onerror="this.style.display='none'">
             <div class="brand-text">
                 <h1>Raheti Foods Isashi</h1>
-                <span class="motto">Welcome! Please Place Your Order Here</span>
+                <span class="motto">Welcome! Place Your Order Here</span>
             </div>
         </div>
     </header>
 
     <div class="container">
-        <h2 class="menu-title">Alacarte Kitchen Menu</h2>
-        <p style="text-align: center; color: #666; margin-bottom: 2rem;">Order from your table and it will be prepared instantly!</p>
+        <h2 class="menu-title">À La Carte Kitchen</h2>
+        <div style="text-align: center;"><span class="live-tag">🔥 Live Cooking</span></div>
+        <p style="text-align: center; color: #666; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Every meal is prepared live from scratch using fresh raw ingredients. Order directly from your table and watch the magic happen!
+        </p>
 
-        <div class="category-title">Rice & Main Meals</div>
+        <!-- GRID 0: RICE & MAIN MEALS (Full/Half logic applies only to this grid) -->
+        <div class="category-title">Rice & Mains</div>
         <div class="menu-grid">
             <div class="menu-item"><span class="item-name">Jollof Rice</span><span class="item-price">₦1,400</span></div>
             <div class="menu-item"><span class="item-name">Fried Rice</span><span class="item-price">₦1,400</span></div>
@@ -64,49 +68,137 @@
             <div class="menu-item"><span class="item-name">Chinese Rice</span><span class="item-price">₦1,800</span></div>
             <div class="menu-item"><span class="item-name">Ofada Rice</span><span class="item-price">₦1,500</span></div>
             <div class="menu-item"><span class="item-name">White Rice</span><span class="item-price">₦1,000</span></div>
-            <div class="menu-item"><span class="item-name">White Rice and Beans</span><span class="item-price">₦1,800</span></div>
-            <div class="menu-item"><span class="item-name">Beefy Rice</span><span class="item-price">₦2,800</span></div>
-            <div class="menu-item"><span class="item-name">Asun Rice</span><span class="item-price">₦3,000</span></div>
             <div class="menu-item"><span class="item-name">Spaghetti</span><span class="item-price">₦1,500</span></div>
-            <div class="menu-item"><span class="item-name">Nando Macaroni</span><span class="item-price">₦3,000</span></div>
-            <div class="menu-item"><span class="item-name">Yamarita</span><span class="item-price">₦2,800</span></div>
-            <div class="menu-item"><span class="item-name">Yam and Egg</span><span class="item-price">₦2,800</span></div>
             <div class="menu-item"><span class="item-name">Yam Porridge</span><span class="item-price">₦1,800</span></div>
             <div class="menu-item"><span class="item-name">Beans Porridge</span><span class="item-price">₦1,400</span></div>
-            <div class="menu-item"><span class="item-name">Ekpang Kwukuo</span><span class="item-price">₦3,000</span></div>
-            <div class="menu-item"><span class="item-name">Moi-moi</span><span class="item-price">₦800</span></div>
-            <div class="menu-item"><span class="item-name">Salad</span><span class="item-price">₦700</span></div>
-            <div class="menu-item"><span class="item-name">Fried Plantain</span><span class="item-price">₦1,000</span></div>
         </div>
 
-        <div class="category-title">Soups & Swallows</div>
+        <div class="category-title">Swallows</div>
         <div class="menu-grid">
-            <div class="menu-item"><span class="item-name">Egusi Soup</span><span class="item-price">₦1,300</span></div>
-            <div class="menu-item"><span class="item-name">Vegetable Soup</span><span class="item-price">₦1,400</span></div>
-            <div class="menu-item"><span class="item-name">White Soup</span><span class="item-price">₦2,500</span></div>
-            <div class="menu-item"><span class="item-name">Afang Soup</span><span class="item-price">₦1,300</span></div>
-            <div class="menu-item"><span class="item-name">Edikaikong Soup</span><span class="item-price">₦1,600</span></div>
             <div class="menu-item"><span class="item-name">Semovita</span><span class="item-price">₦600</span></div>
             <div class="menu-item"><span class="item-name">Poundo Yam</span><span class="item-price">₦700</span></div>
             <div class="menu-item"><span class="item-name">Eba</span><span class="item-price">₦500</span></div>
             <div class="menu-item"><span class="item-name">Wheat</span><span class="item-price">₦400</span></div>
         </div>
 
-        <div class="category-title">Sides & Proteins</div>
+        <!-- NEW À LA CARTE LIVE COOKING SOUPS -->
+        <div class="category-title">Efo Riro & Afang (Live Cooking)</div>
         <div class="menu-grid">
-            <div class="menu-item"><span class="item-name">Chicken</span><span class="item-price">₦3,500</span></div>
-            <div class="menu-item"><span class="item-name">Big Turkey</span><span class="item-price">₦5,000</span></div>
-            <div class="menu-item"><span class="item-name">Small Turkey</span><span class="item-price">₦3,500</span></div>
-            <div class="menu-item"><span class="item-name">Gizzard</span><span class="item-price">₦2,200</span></div>
-            <div class="menu-item"><span class="item-name">Beef</span><span class="item-price">₦700</span></div>
-            <div class="menu-item"><span class="item-name">Assorted</span><span class="item-price">₦1,000</span></div>
-            <div class="menu-item"><span class="item-name">Goat Meat</span><span class="item-price">₦3,600</span></div>
-            <div class="menu-item"><span class="item-name">Cow Leg</span><span class="item-price">₦5,000</span></div>
-            <div class="menu-item"><span class="item-name">Titus Fish</span><span class="item-price">₦2,200</span></div>
-            <div class="menu-item"><span class="item-name">Croaker Fish</span><span class="item-price">₦10,000</span></div>
+            <div class="menu-item"><span class="item-name">Efo Riro + Beef</span><span class="item-price">₦3,900</span></div>
+            <div class="menu-item"><span class="item-name">Efo Riro + Turkey</span><span class="item-price">₦8,000</span></div>
+            <div class="menu-item"><span class="item-name">Efo Riro + Chicken</span><span class="item-price">₦6,000</span></div>
+            <div class="menu-item"><span class="item-name">Efo Riro + Goat Meat</span><span class="item-price">₦5,000</span></div>
+            <div class="menu-item"><span class="item-name">Efo Riro + Assorted</span><span class="item-price">₦3,500</span></div>
+            <div class="menu-item"><span class="item-name">Efo Riro + Ponmo</span><span class="item-price">₦3,300</span></div>
+            <div class="menu-item"><span class="item-name">Afang + Beef</span><span class="item-price">₦4,400</span></div>
+            <div class="menu-item"><span class="item-name">Afang + Turkey</span><span class="item-price">₦8,500</span></div>
+            <div class="menu-item"><span class="item-name">Afang + Chicken</span><span class="item-price">₦6,500</span></div>
+            <div class="menu-item"><span class="item-name">Afang + Goat Meat</span><span class="item-price">₦6,000</span></div>
+            <div class="menu-item"><span class="item-name">Afang + Assorted</span><span class="item-price">₦4,000</span></div>
+            <div class="menu-item"><span class="item-name">Afang + Ponmo</span><span class="item-price">₦3,800</span></div>
+        </div>
+
+        <div class="category-title">Oha & Ogbono (Live Cooking)</div>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Oha + Beef</span><span class="item-price">₦3,900</span></div>
+            <div class="menu-item"><span class="item-name">Oha + Turkey</span><span class="item-price">₦8,000</span></div>
+            <div class="menu-item"><span class="item-name">Oha + Chicken</span><span class="item-price">₦6,000</span></div>
+            <div class="menu-item"><span class="item-name">Oha + Goat Meat</span><span class="item-price">₦7,500</span></div>
+            <div class="menu-item"><span class="item-name">Oha + Assorted</span><span class="item-price">₦3,500</span></div>
+            <div class="menu-item"><span class="item-name">Oha + Ponmo</span><span class="item-price">₦3,300</span></div>
+            <div class="menu-item"><span class="item-name">Oha + Titus</span><span class="item-price">₦4,500</span></div>
+            <div class="menu-item"><span class="item-name">Oha + Croaker</span><span class="item-price">₦6,000</span></div>
+            <div class="menu-item"><span class="item-name">Oha + Cowleg</span><span class="item-price">₦7,500</span></div>
+            <div class="menu-item"><span class="item-name">Ogbono + Beef</span><span class="item-price">₦4,400</span></div>
+            <div class="menu-item"><span class="item-name">Ogbono + Turkey</span><span class="item-price">₦8,500</span></div>
+            <div class="menu-item"><span class="item-name">Ogbono + Chicken</span><span class="item-price">₦6,500</span></div>
+            <div class="menu-item"><span class="item-name">Ogbono + Goat Meat</span><span class="item-price">₦8,000</span></div>
+            <div class="menu-item"><span class="item-name">Ogbono + Assorted</span><span class="item-price">₦4,000</span></div>
+            <div class="menu-item"><span class="item-name">Ogbono + Ponmo</span><span class="item-price">₦3,800</span></div>
+            <div class="menu-item"><span class="item-name">Ogbono + Titus</span><span class="item-price">₦5,000</span></div>
+            <div class="menu-item"><span class="item-name">Ogbono + Croaker</span><span class="item-price">₦6,500</span></div>
+            <div class="menu-item"><span class="item-name">Ogbono + Cowleg</span><span class="item-price">₦8,000</span></div>
+        </div>
+
+        <div class="category-title">White Soup & Banga (Live Cooking)</div>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">White Soup + Beef</span><span class="item-price">₦5,500</span></div>
+            <div class="menu-item"><span class="item-name">White Soup + Turkey</span><span class="item-price">₦8,500</span></div>
+            <div class="menu-item"><span class="item-name">White Soup + Chicken</span><span class="item-price">₦8,000</span></div>
+            <div class="menu-item"><span class="item-name">White Soup + Goat Meat</span><span class="item-price">₦9,500</span></div>
+            <div class="menu-item"><span class="item-name">White Soup + Assorted</span><span class="item-price">₦5,500</span></div>
+            <div class="menu-item"><span class="item-name">White Soup + Ponmo</span><span class="item-price">₦5,300</span></div>
+            <div class="menu-item"><span class="item-name">White Soup + Titus</span><span class="item-price">₦6,500</span></div>
+            <div class="menu-item"><span class="item-name">White Soup + Croaker</span><span class="item-price">₦8,000</span></div>
+            <div class="menu-item"><span class="item-name">White Soup + Cowleg</span><span class="item-price">₦9,500</span></div>
+            <div class="menu-item"><span class="item-name">Banga Soup + Beef</span><span class="item-price">₦4,400</span></div>
+            <div class="menu-item"><span class="item-name">Banga Soup + Turkey</span><span class="item-price">₦8,500</span></div>
+            <div class="menu-item"><span class="item-name">Banga Soup + Chicken</span><span class="item-price">₦6,500</span></div>
+            <div class="menu-item"><span class="item-name">Banga Soup + Goat Meat</span><span class="item-price">₦8,000</span></div>
+            <div class="menu-item"><span class="item-name">Banga Soup + Assorted</span><span class="item-price">₦4,000</span></div>
+            <div class="menu-item"><span class="item-name">Banga Soup + Ponmo</span><span class="item-price">₦3,800</span></div>
+            <div class="menu-item"><span class="item-name">Banga Soup + Titus</span><span class="item-price">₦5,000</span></div>
+            <div class="menu-item"><span class="item-name">Banga Soup + Croaker</span><span class="item-price">₦6,500</span></div>
+            <div class="menu-item"><span class="item-name">Banga Soup + Cowleg</span><span class="item-price">₦8,000</span></div>
+        </div>
+
+        <div class="category-title">Bitterleaf & Egusi (Live Cooking)</div>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Bitterleaf + Beef</span><span class="item-price">₦4,000</span></div>
+            <div class="menu-item"><span class="item-name">Bitterleaf + Turkey</span><span class="item-price">₦8,500</span></div>
+            <div class="menu-item"><span class="item-name">Bitterleaf + Chicken</span><span class="item-price">₦6,500</span></div>
+            <div class="menu-item"><span class="item-name">Bitterleaf + Goat Meat</span><span class="item-price">₦8,000</span></div>
+            <div class="menu-item"><span class="item-name">Bitterleaf + Assorted</span><span class="item-price">₦4,000</span></div>
+            <div class="menu-item"><span class="item-name">Bitterleaf + Ponmo</span><span class="item-price">₦3,800</span></div>
+            <div class="menu-item"><span class="item-name">Bitterleaf + Titus</span><span class="item-price">₦5,000</span></div>
+            <div class="menu-item"><span class="item-name">Bitterleaf + Croaker</span><span class="item-price">₦6,500</span></div>
+            <div class="menu-item"><span class="item-name">Bitterleaf + Cowleg</span><span class="item-price">₦8,000</span></div>
+            <div class="menu-item"><span class="item-name">Egusi Soup + Beef</span><span class="item-price">₦4,400</span></div>
+            <div class="menu-item"><span class="item-name">Egusi Soup + Turkey</span><span class="item-price">₦8,500</span></div>
+            <div class="menu-item"><span class="item-name">Egusi Soup + Chicken</span><span class="item-price">₦6,500</span></div>
+            <div class="menu-item"><span class="item-name">Egusi Soup + Goat Meat</span><span class="item-price">₦8,000</span></div>
+            <div class="menu-item"><span class="item-name">Egusi Soup + Assorted</span><span class="item-price">₦4,000</span></div>
+            <div class="menu-item"><span class="item-name">Egusi Soup + Ponmo</span><span class="item-price">₦3,800</span></div>
+            <div class="menu-item"><span class="item-name">Egusi Soup + Titus</span><span class="item-price">₦5,000</span></div>
+            <div class="menu-item"><span class="item-name">Egusi Soup + Croaker</span><span class="item-price">₦6,500</span></div>
+            <div class="menu-item"><span class="item-name">Egusi Soup + Cowleg</span><span class="item-price">₦8,000</span></div>
+        </div>
+
+        <div class="category-title">Okro & Atama (Live Cooking)</div>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Okro Soup + Beef</span><span class="item-price">₦3,900</span></div>
+            <div class="menu-item"><span class="item-name">Okro Soup + Turkey</span><span class="item-price">₦8,000</span></div>
+            <div class="menu-item"><span class="item-name">Okro Soup + Chicken</span><span class="item-price">₦7,000</span></div>
+            <div class="menu-item"><span class="item-name">Okro Soup + Goat Meat</span><span class="item-price">₦7,500</span></div>
+            <div class="menu-item"><span class="item-name">Okro Soup + Assorted</span><span class="item-price">₦3,500</span></div>
+            <div class="menu-item"><span class="item-name">Okro Soup + Ponmo</span><span class="item-price">₦3,300</span></div>
+            <div class="menu-item"><span class="item-name">Okro Soup + Titus</span><span class="item-price">₦4,500</span></div>
+            <div class="menu-item"><span class="item-name">Okro Soup + Croaker</span><span class="item-price">₦6,000</span></div>
+            <div class="menu-item"><span class="item-name">Okro Soup + Cowleg</span><span class="item-price">₦7,500</span></div>
+            <div class="menu-item"><span class="item-name">Atama Soup + Beef</span><span class="item-price">₦4,400</span></div>
+            <div class="menu-item"><span class="item-name">Atama Soup + Turkey</span><span class="item-price">₦8,500</span></div>
+            <div class="menu-item"><span class="item-name">Atama Soup + Chicken</span><span class="item-price">₦6,500</span></div>
+            <div class="menu-item"><span class="item-name">Atama Soup + Goat Meat</span><span class="item-price">₦8,500</span></div>
+            <div class="menu-item"><span class="item-name">Atama Soup + Assorted</span><span class="item-price">₦4,000</span></div>
+            <div class="menu-item"><span class="item-name">Atama Soup + Ponmo</span><span class="item-price">₦3,800</span></div>
+            <div class="menu-item"><span class="item-name">Atama Soup + Titus</span><span class="item-price">₦5,000</span></div>
+            <div class="menu-item"><span class="item-name">Atama Soup + Croaker</span><span class="item-price">₦6,500</span></div>
+            <div class="menu-item"><span class="item-name">Atama Soup + Cowleg</span><span class="item-price">₦8,000</span></div>
+        </div>
+        
+        <div class="category-title">Drinks & Ice Cream</div>
+        <div class="menu-grid">
+            <div class="menu-item"><span class="item-name">Bottled Water</span><span class="item-price">₦200</span></div>
+            <div class="menu-item"><span class="item-name">Pet Coke / Fanta / Sprite</span><span class="item-price">₦400</span></div>
+            <div class="menu-item"><span class="item-name">Vitamilk</span><span class="item-price">₦1,200</span></div>
+            <div class="menu-item"><span class="item-name">Monster Energy</span><span class="item-price">₦1,500</span></div>
+            <div class="menu-item"><span class="item-name">Heineken Can</span><span class="item-price">₦1,200</span></div>
+            <div class="menu-item"><span class="item-name">Desperados Can</span><span class="item-price">₦1,200</span></div>
+            <div class="menu-item"><span class="item-name">Golden Scoop Ice Cream</span><span class="item-price">₦800</span></div>
         </div>
     </div>
 
+    <!-- CART SYSTEM -->
     <div id="cart-overlay" onclick="toggleCart()"></div>
     <div id="floating-cart" onclick="toggleCart()">🛒 My Cart (<span id="cart-count">0</span>)</div>
 
@@ -120,11 +212,8 @@
         
         <div style="margin-bottom: 10px; border-top: 2px dashed #ddd; padding-top: 10px;">
             <label style="font-weight: bold; color: #1d3557; display: block; margin-bottom: 5px;">Eating Here or Takeaway?</label>
-            <p style="font-size: 0.8rem; color: #666; margin-top: 0; margin-bottom: 10px;">
-                (If taking away, add required packs: ₦300/Pack, ₦100/Bowl)
-            </p>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <span>Take Away Packs</span>
+                <span>Take Away Packs (₦300)</span>
                 <div style="display: flex; align-items: center;">
                     <button onclick="updatePackaging('takeaway', -1)" style="padding: 2px 10px; font-weight: bold; cursor: pointer;">-</button>
                     <span id="qty-takeaway" style="margin: 0 15px; font-weight: bold;">0</span>
@@ -132,7 +221,7 @@
                 </div>
             </div>
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span>Portioning Bowls</span>
+                <span>Portioning Bowls (₦100)</span>
                 <div style="display: flex; align-items: center;">
                     <button onclick="updatePackaging('bowl', -1)" style="padding: 2px 10px; font-weight: bold; cursor: pointer;">-</button>
                     <span id="qty-bowl" style="margin: 0 15px; font-weight: bold;">0</span>
@@ -153,11 +242,11 @@
             Total: ₦<span id="cart-total">0</span>
         </div>
 
-        <button class="checkout-btn" onclick="processCheckout('2348127811947')">Pay Securely & Send to Kitchen</button>
+        <!-- REPLACE WITH ISASHI WHATSAPP -->
+        <button class="checkout-btn" onclick="processCheckout('2340000000000')">Pay & Send to Kitchen</button>
     </div>
 
     <script src="https://js.paystack.co/v1/inline.js"></script>
-
     <script>
         let cart = [];
         let takeawayQty = 0;
@@ -169,11 +258,10 @@
             const name = nameSpan.innerText;
             const basePrice = parseInt(priceSpan.innerText.replace(/[^0-9]/g, ''));
 
-            const excludedPortions = ['Moi-moi', 'Salad', 'Fried Plantain'];
+            // The first menu-grid is Rice & Mains. We only apply the full/half logic there.
             const mainMealsGrid = document.querySelectorAll('.menu-grid')[0];
             const isMainMeal = mainMealsGrid.contains(item);
-            const isExcluded = excludedPortions.includes(name);
-
+            
             const actionContainer = document.createElement('div');
             actionContainer.style.display = 'flex';
             actionContainer.style.alignItems = 'center';
@@ -189,7 +277,7 @@
             qtyInput.style.borderRadius = '4px';
             qtyInput.style.textAlign = 'center';
 
-            if (isMainMeal && !isExcluded) {
+            if (isMainMeal) {
                 priceSpan.style.display = 'none';
                 const select = document.createElement('select');
                 select.style.padding = '5px 8px';
@@ -199,11 +287,11 @@
 
                 const fullOpt = document.createElement('option');
                 fullOpt.value = basePrice;
-                fullOpt.text = `Full (2 spoons) - ₦${basePrice.toLocaleString()}`;
+                fullOpt.text = `Full - ₦${basePrice.toLocaleString()}`;
 
                 const halfOpt = document.createElement('option');
                 halfOpt.value = basePrice / 2;
-                halfOpt.text = `Half (1 spoon) - ₦${(basePrice / 2).toLocaleString()}`;
+                halfOpt.text = `Half - ₦${(basePrice / 2).toLocaleString()}`;
 
                 select.appendChild(fullOpt);
                 select.appendChild(halfOpt);
@@ -298,7 +386,6 @@
 
             const packagingFee = (takeawayQty * 300) + (bowlQty * 100);
             const finalTotal = subtotal + packagingFee;
-
             document.getElementById('cart-total').innerText = finalTotal.toLocaleString();
         }
 
@@ -317,20 +404,14 @@
             const tableRef = document.getElementById('table-ref').value;
             const emailInput = document.getElementById('customer-email').value;
 
-            if(!tableRef) {
-                alert("Please enter your Table Number or Name.");
-                return;
-            }
-            if(!emailInput) {
-                alert("Please enter your email address for the receipt.");
-                return;
-            }
+            if(!tableRef) { alert("Please enter your Table Number or Name."); return; }
+            if(!emailInput) { alert("Please enter your email address for the receipt."); return; }
 
             const packagingFee = (takeawayQty * 300) + (bowlQty * 100);
             const ticketCode = "TKT-" + Math.floor(100 + Math.random() * 900);
             let subtotal = 0;
             
-            let whatsappMessage = `*🚨 ALACARTE ORDER PAID 🚨*\n\n*Ticket:* ${ticketCode}\n*Table/Name:* ${tableRef}\n*Status:* PAID ✅\n\n*Dishes Ordered:*\n`;
+            let whatsappMessage = `*🔥 À LA CARTE ORDER PAID 🔥*\n\n*Ticket:* ${ticketCode}\n*Table/Name:* ${tableRef}\n*Status:* PAID ✅\n\n*Live Cooking Required:*\n`;
             
             cart.forEach(item => {
                 const itemTotal = item.price * item.qty;
@@ -347,25 +428,36 @@
             const finalTotal = subtotal + packagingFee;
             whatsappMessage += `\n*Total Paid:* ₦${finalTotal.toLocaleString()}`;
 
-            // Initialize Paystack Popup
             let handler = PaystackPop.setup({
-                key: 'pk_test_656445a6d02d1135ecf651eaf35078a833d8b891', // Test Key
+                key: 'pk_test_656445a6d02d1135ecf651eaf35078a833d8b891', 
                 email: emailInput,
-                amount: finalTotal * 100, // Paystack format
+                amount: finalTotal * 100, 
                 currency: 'NGN',
                 ref: ticketCode,
                 callback: function(response){
-                    whatsappMessage += `\n*Paystack Ref:* ${response.reference}\n\nKitchen, please begin preparation!`;
+                    // Make sure to paste your actual Google Web App URL below
+                    fetch('PASTE_YOUR_WEB_APP_URL_HERE', {
+                        method: 'POST',
+                        body: JSON.stringify({ branch: "Isashi", cart: cart })
+                    }).catch(err => console.log("Inventory update sent."));
+
+                    whatsappMessage += `\n*Paystack Ref:* ${response.reference}\n\nKitchen, please begin live preparation!`;
                     const encodedMessage = encodeURIComponent(whatsappMessage);
                     window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
                     
-                    cart = []; updateCartUI(); toggleCart();
+                    cart = []; takeawayQty = 0; bowlQty = 0; updateCartUI(); 
+                    document.getElementById('qty-takeaway').innerText = '0';
+                    document.getElementById('qty-bowl').innerText = '0';
                     document.getElementById('table-ref').value = "";
-                    alert("Payment successful! Sending ticket to the kitchen.");
+                    document.getElementById('customer-email').value = "";
+                    
+                    document.getElementById('cart-modal').style.display = 'none';
+                    document.getElementById('cart-overlay').style.display = 'none';
+                    document.getElementById('floating-cart').style.display = 'none';
+                    
+                    alert("Payment successful! Sending your live cooking ticket to the kitchen.");
                 },
-                onClose: function(){
-                    alert('Transaction closed. Payment not completed.');
-                }
+                onClose: function(){ alert('Transaction closed. Payment not completed.'); }
             });
             
             handler.openIframe();
