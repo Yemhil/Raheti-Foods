@@ -1,0 +1,16 @@
+{
+  "name": "Raheti Foods",
+  "short_name": "Raheti",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fcfcfc",
+  "theme_color": "#a01416",
+  "icons": [
+    {
+      "src": "LOG.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
