@@ -17,10 +17,16 @@
         .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; position: relative; z-index: 1; }
         .menu-title { text-align: center; color: #a01416; font-size: 2rem; margin-bottom: 0.5rem; }
         .live-tag { display: inline-block; background-color: #e63946; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; font-weight: bold; text-align: center; margin: 0 auto 2rem auto; }
+        
         .category-title { background-color: #1d3557; color: white; padding: 0.8rem 1rem; border-radius: 6px; font-size: 1.4rem; margin-top: 2.5rem; margin-bottom: 1rem; border-left: 5px solid #ffcc00; }
+        
+        /* NEW STYLING FOR SOUP BANNERS */
+        .category-banner { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 2px solid #fff; }
+        
         .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
         
-        .menu-item { background: white; padding: 1.2rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 4px solid #a01416; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; box-sizing: border-box; overflow: hidden; }
+        .menu-item { background: white; padding: 1.2rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 4px solid #a01416; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; box-sizing: border-box; overflow: hidden; transition: transform 0.2s ease; }
+        .menu-item:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .item-name { font-weight: bold; color: #222; font-size: 1.05rem; width: 100%; border-bottom: 1px dashed #ddd; padding-bottom: 8px; }
         .item-price { font-weight: bold; color: #a01416; }
         .menu-item > div { flex-wrap: wrap; width: 100%; }
@@ -58,21 +64,6 @@
             Every meal is prepared live from scratch using fresh raw ingredients. Order directly from your table and watch the magic happen!
         </p>
 
-        <!-- GRID 0: RICE & MAIN MEALS (Full/Half logic applies only to this grid) -->
-        <div class="category-title">Rice & Mains</div>
-        <div class="menu-grid">
-            <div class="menu-item"><span class="item-name">Jollof Rice</span><span class="item-price">₦1,400</span></div>
-            <div class="menu-item"><span class="item-name">Fried Rice</span><span class="item-price">₦1,400</span></div>
-            <div class="menu-item"><span class="item-name">Coconut Rice</span><span class="item-price">₦1,600</span></div>
-            <div class="menu-item"><span class="item-name">Village Rice</span><span class="item-price">₦1,300</span></div>
-            <div class="menu-item"><span class="item-name">Chinese Rice</span><span class="item-price">₦1,800</span></div>
-            <div class="menu-item"><span class="item-name">Ofada Rice</span><span class="item-price">₦1,500</span></div>
-            <div class="menu-item"><span class="item-name">White Rice</span><span class="item-price">₦1,000</span></div>
-            <div class="menu-item"><span class="item-name">Spaghetti</span><span class="item-price">₦1,500</span></div>
-            <div class="menu-item"><span class="item-name">Yam Porridge</span><span class="item-price">₦1,800</span></div>
-            <div class="menu-item"><span class="item-name">Beans Porridge</span><span class="item-price">₦1,400</span></div>
-        </div>
-
         <div class="category-title">Swallows</div>
         <div class="menu-grid">
             <div class="menu-item"><span class="item-name">Semovita</span><span class="item-price">₦600</span></div>
@@ -81,8 +72,8 @@
             <div class="menu-item"><span class="item-name">Wheat</span><span class="item-price">₦400</span></div>
         </div>
 
-        <!-- NEW À LA CARTE LIVE COOKING SOUPS -->
         <div class="category-title">Efo Riro & Afang (Live Cooking)</div>
+        <img src="efo.jfif" class="category-banner" alt="Efo Riro and Afang" onerror="this.style.display='none'">
         <div class="menu-grid">
             <div class="menu-item"><span class="item-name">Efo Riro + Beef</span><span class="item-price">₦3,900</span></div>
             <div class="menu-item"><span class="item-name">Efo Riro + Turkey</span><span class="item-price">₦8,000</span></div>
@@ -99,6 +90,7 @@
         </div>
 
         <div class="category-title">Oha & Ogbono (Live Cooking)</div>
+        <img src="oha.jpg" class="category-banner" alt="Oha and Ogbono" onerror="this.style.display='none'">
         <div class="menu-grid">
             <div class="menu-item"><span class="item-name">Oha + Beef</span><span class="item-price">₦3,900</span></div>
             <div class="menu-item"><span class="item-name">Oha + Turkey</span><span class="item-price">₦8,000</span></div>
@@ -121,6 +113,7 @@
         </div>
 
         <div class="category-title">White Soup & Banga (Live Cooking)</div>
+        <img src="banga.jfif" class="category-banner" alt="White Soup and Banga" onerror="this.style.display='none'">
         <div class="menu-grid">
             <div class="menu-item"><span class="item-name">White Soup + Beef</span><span class="item-price">₦5,500</span></div>
             <div class="menu-item"><span class="item-name">White Soup + Turkey</span><span class="item-price">₦8,500</span></div>
@@ -143,6 +136,7 @@
         </div>
 
         <div class="category-title">Bitterleaf & Egusi (Live Cooking)</div>
+        <img src="egusi.jpeg" class="category-banner" alt="Bitterleaf and Egusi" onerror="this.style.display='none'">
         <div class="menu-grid">
             <div class="menu-item"><span class="item-name">Bitterleaf + Beef</span><span class="item-price">₦4,000</span></div>
             <div class="menu-item"><span class="item-name">Bitterleaf + Turkey</span><span class="item-price">₦8,500</span></div>
@@ -165,6 +159,7 @@
         </div>
 
         <div class="category-title">Okro & Atama (Live Cooking)</div>
+        <img src="okro.jpg" class="category-banner" alt="Okro and Atama" onerror="this.style.display='none'">
         <div class="menu-grid">
             <div class="menu-item"><span class="item-name">Okro Soup + Beef</span><span class="item-price">₦3,900</span></div>
             <div class="menu-item"><span class="item-name">Okro Soup + Turkey</span><span class="item-price">₦8,000</span></div>
@@ -184,17 +179,6 @@
             <div class="menu-item"><span class="item-name">Atama Soup + Titus</span><span class="item-price">₦5,000</span></div>
             <div class="menu-item"><span class="item-name">Atama Soup + Croaker</span><span class="item-price">₦6,500</span></div>
             <div class="menu-item"><span class="item-name">Atama Soup + Cowleg</span><span class="item-price">₦8,000</span></div>
-        </div>
-        
-        <div class="category-title">Drinks & Ice Cream</div>
-        <div class="menu-grid">
-            <div class="menu-item"><span class="item-name">Bottled Water</span><span class="item-price">₦200</span></div>
-            <div class="menu-item"><span class="item-name">Pet Coke / Fanta / Sprite</span><span class="item-price">₦400</span></div>
-            <div class="menu-item"><span class="item-name">Vitamilk</span><span class="item-price">₦1,200</span></div>
-            <div class="menu-item"><span class="item-name">Monster Energy</span><span class="item-price">₦1,500</span></div>
-            <div class="menu-item"><span class="item-name">Heineken Can</span><span class="item-price">₦1,200</span></div>
-            <div class="menu-item"><span class="item-name">Desperados Can</span><span class="item-price">₦1,200</span></div>
-            <div class="menu-item"><span class="item-name">Golden Scoop Ice Cream</span><span class="item-price">₦800</span></div>
         </div>
     </div>
 
@@ -242,8 +226,8 @@
             Total: ₦<span id="cart-total">0</span>
         </div>
 
-        <!-- REPLACE WITH ISASHI WHATSAPP -->
-        <button class="checkout-btn" onclick="processCheckout('2340000000000')">Pay & Send to Kitchen</button>
+        <!-- NEW WHATSAPP NUMBER -->
+        <button class="checkout-btn" onclick="processCheckout('2348127811947')">Pay & Send to Kitchen</button>
     </div>
 
     <script src="https://js.paystack.co/v1/inline.js"></script>
@@ -258,10 +242,6 @@
             const name = nameSpan.innerText;
             const basePrice = parseInt(priceSpan.innerText.replace(/[^0-9]/g, ''));
 
-            // The first menu-grid is Rice & Mains. We only apply the full/half logic there.
-            const mainMealsGrid = document.querySelectorAll('.menu-grid')[0];
-            const isMainMeal = mainMealsGrid.contains(item);
-            
             const actionContainer = document.createElement('div');
             actionContainer.style.display = 'flex';
             actionContainer.style.alignItems = 'center';
@@ -277,55 +257,20 @@
             qtyInput.style.borderRadius = '4px';
             qtyInput.style.textAlign = 'center';
 
-            if (isMainMeal) {
-                priceSpan.style.display = 'none';
-                const select = document.createElement('select');
-                select.style.padding = '5px 8px';
-                select.style.borderRadius = '4px';
-                select.style.border = '1px solid #ccc';
-                select.style.fontWeight = 'bold';
+            const btn = document.createElement('button');
+            btn.innerText = '+ Add';
+            btn.className = 'add-to-cart-btn';
+            
+            btn.onclick = () => {
+                const qty = parseInt(qtyInput.value) || 1;
+                addToCart(name, basePrice, qty);
+                qtyInput.value = '1';
+            };
 
-                const fullOpt = document.createElement('option');
-                fullOpt.value = basePrice;
-                fullOpt.text = `Full - ₦${basePrice.toLocaleString()}`;
-
-                const halfOpt = document.createElement('option');
-                halfOpt.value = basePrice / 2;
-                halfOpt.text = `Half - ₦${(basePrice / 2).toLocaleString()}`;
-
-                select.appendChild(fullOpt);
-                select.appendChild(halfOpt);
-
-                const btn = document.createElement('button');
-                btn.innerText = '+ Add';
-                btn.className = 'add-to-cart-btn';
-                
-                btn.onclick = () => {
-                    const selectedPrice = parseInt(select.value);
-                    const portionText = select.options[select.selectedIndex].text.split(' - ')[0]; 
-                    const qty = parseInt(qtyInput.value) || 1;
-                    addToCart(`${name} (${portionText})`, selectedPrice, qty);
-                    qtyInput.value = '1';
-                };
-
-                actionContainer.appendChild(select);
-                actionContainer.appendChild(qtyInput);
-                actionContainer.appendChild(btn);
-            } else {
-                const btn = document.createElement('button');
-                btn.innerText = '+ Add';
-                btn.className = 'add-to-cart-btn';
-                
-                btn.onclick = () => {
-                    const qty = parseInt(qtyInput.value) || 1;
-                    addToCart(name, basePrice, qty);
-                    qtyInput.value = '1';
-                };
-
-                actionContainer.appendChild(priceSpan);
-                actionContainer.appendChild(qtyInput);
-                actionContainer.appendChild(btn);
-            }
+            actionContainer.appendChild(priceSpan);
+            actionContainer.appendChild(qtyInput);
+            actionContainer.appendChild(btn);
+            
             item.appendChild(actionContainer);
         });
 
@@ -435,7 +380,7 @@
                 currency: 'NGN',
                 ref: ticketCode,
                 callback: function(response){
-                    // Make sure to paste your actual Google Web App URL below
+                    // Ensure your Apps Script URL is here
                     fetch('PASTE_YOUR_WEB_APP_URL_HERE', {
                         method: 'POST',
                         body: JSON.stringify({ branch: "Isashi", cart: cart })
