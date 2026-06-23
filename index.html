@@ -57,6 +57,37 @@
         .whatsapp-float:hover { transform: scale(1.1); }
 
         footer { background-color: #1d3557; color: white; text-align: center; padding: 2rem; position: relative; z-index: 1; }
+        .nav-container {
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping on small screens */
+    justify-content: center; /* Centers items */
+    gap: 15px; /* Adds space between items */
+    padding: 15px;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+.nav-container a {
+    text-decoration: none;
+    color: #333;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    white-space: nowrap; /* Prevents text from breaking */
+}
+
+/* Specific button styling */
+.download-link { color: #a01416 !important; font-weight: bold; }
+.isashi-link { color: #d4a017 !important; border-bottom: 2px solid #d4a017; }
+.change-branch-btn { cursor: pointer; color: #a01416; }
+
+/* Small screen optimization */
+@media (max-width: 600px) {
+    .nav-container {
+        gap: 8px; /* Tighter spacing on small phones */
+    }
+    .nav-container a {
+        font-size: 0.8rem; /* Smaller font for better fit */
+    }
     </style>
 </head>
 <body>
@@ -89,12 +120,14 @@
             </div>
         </div>
        <nav>
-            <a href="menu.html">Delivery Menu</a>
-            <a href="isashi-portal.html" style="color: #ffcc00; border-bottom: 2px solid #ffcc00; padding-bottom: 2px;">Isashi Dine-In</a>
-            <a href="#video">Fresh Daily</a>
-            <a href="#reviews">Reviews</a>
-            <a onclick="showBranchPopup()" class="change-branch-btn">📍 Change Branch</a>
-        </nav>
+           <nav class="nav-container">
+    <a href="menu.html">Delivery Menu</a>
+    <a href="download.html" class="download-link"><i class="fas fa-download"></i> Download App</a>
+    <a href="isashi-portal.html" class="isashi-link">Isashi Dine-In</a>
+    <a href="#video">Fresh Daily</a>
+    <a href="#reviews">Reviews</a>
+    <a onclick="showBranchPopup()" class="change-branch-btn">📍 Change Branch</a>
+</nav>
     </header>
 
    <section class="hero">
