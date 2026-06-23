@@ -608,20 +608,23 @@
                 currency: 'NGN',
                 ref: orderCode, // Unique reference code
                 callback: function(response){
-                    // This runs ONLY if payment is successful
+                    // 1. Send the data to your new Google Sheet invisibly
+                    fetch('https://script.google.com/macros/s/AKfycbxAizJ6UqSoFYXcLeqQ7nBCWeT19xGYtkh77GHCV8TgFn7G4glgc1Cs-sjy4eA4mulHXw/exec', {
+                        method: 'POST',
+                        body: JSON.stringify(cart)
+                    }).catch(err => console.log("Inventory update sent."));
+
+                    // 2. Generate the WhatsApp Message
                     whatsappMessage += `\n*Paystack Ref:* ${response.reference}\n\nPlease process my order!`;
                     const encodedMessage = encodeURIComponent(whatsappMessage);
                     window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
                     
-                    // Empty the cart
+                    // 3. Empty the cart and close out
                     cart = [];
                     updateCartUI();
                     toggleCart();
                     alert("Payment successful! Redirecting to WhatsApp...");
                 },
-                onClose: function(){
-                    alert('Transaction window closed. Payment was not completed.');
-                }
             });
             
             handler.openIframe();
